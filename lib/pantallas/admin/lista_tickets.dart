@@ -1,18 +1,86 @@
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/Ticket.dart';
 import 'package:flutter/material.dart';
 
 class ListaTickets extends StatelessWidget {
-  const ListaTickets({Key? key}) : super(key: key);
+  final List<Ticket> tickets;
+  const ListaTickets({super.key, required this.tickets});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de tickets'),
+        title: Text('Administrador'),
       ),
-      body: const Center(
-        child: Text('Aquí se mostrará la lista de tickets'),
+      body: Stack(
+        children: [
+          // Contenido principal con scroll horizontal
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Lista de Tickets',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const SizedBox(width: 8.0),
+                        const Icon(Icons.admin_panel_settings),
+                      ],
+                    ),
+                    const SizedBox(height: 16.0),
+                    DataTable(
+                      columns: const [
+                        DataColumn(label: Text('Título')),
+                        DataColumn(label: Text('Descripción')),
+                        DataColumn(label: Text('Estado')),
+                      ],
+                      rows: tickets.map((ticket) {
+                        return DataRow(
+                          cells: [
+                            DataCell(Text(ticket.titulo)),
+                            DataCell(Text(ticket.descripcion)),
+                            DataCell(
+                              Chip(
+                                label: Text(
+                                  ticket.estado,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                backgroundColor: ticket.estado == 'Abierto'
+                                    ? Colors.orange
+                                    : Colors.green,
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          // Botón flotante en la esquina inferior derecha
+          Positioned(
+            right: 16.0,
+            bottom: 16.0,
+            child: FloatingActionButton(
+              onPressed: () {
+                print('Botón presionado');
+              },
+              child: Icon(Icons.add),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-//comentario
