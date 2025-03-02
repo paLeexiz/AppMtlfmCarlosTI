@@ -1,7 +1,31 @@
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/Ticket.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_tickets.dart';
 import 'package:flutter/material.dart';
 
+// final List<Ticket> tickets = [
+//   Ticket(
+//     titulo: 'Ticket 1',
+//     descripcion: 'Descripcion del ticket 1',
+//     estado: 'Abierto',
+//   ),
+//   Ticket(
+//     titulo: 'Ticket 2',
+//     descripcion: 'Descripcion del ticket 2',
+//     estado: 'Cerrado',
+//   ),
+//   Ticket(
+//     titulo: 'Ticket 3',
+//     descripcion: 'Descripcion del ticket 3',
+//     estado: 'Abierto',
+//   ),
+// ];
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    // home:DetallesTicket()
+    // home:DetallesTicket()
+    home:ListaTickets(),//tickets: tickets),
+  ));
 }
 
 class MyApp extends StatelessWidget {
