@@ -4,20 +4,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiService {
-  final String tabla;
-  final String id;
-  final String metodo;
-  final String cuerpo;
 
-  ApiService({
-    required this.tabla,
-    this.id = '',
-    required this.metodo,
-    this.cuerpo = ''
-  });
-
-  static Future<List<dynamic>> solicitud({required String tabla, String id = '', required String metodo, String cuerpo = ''}) async {
-    final url = Uri.parse('urlapi$tabla/$id');
+  static Future<dynamic> solicitud({required String tabla, required String metodo, String id = '', String cuerpo = ''}) async {
+    // final url = Uri.parse('http://127.0.0.1:8000/api/$tabla/$id');
+    final url = Uri.parse('http://192.168.1.134:8000/api/$tabla/$id');
     dynamic response='';
     switch (metodo) {
       case 'get':
@@ -47,7 +37,7 @@ class ApiService {
         response = await http.delete(url);
         break;
       default:
-        // print('como lo hiciste? :o');
+        print('como lo hiciste? :o no hay metodo');
         break;
     }
     if (response.statusCode == 200) {
@@ -57,6 +47,7 @@ class ApiService {
         'error: ${response.statusCode}: ${response.reasonPhrase}'
       );
     }
+    
     // }else {
     //   return ;
     // }
