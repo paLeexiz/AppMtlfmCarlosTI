@@ -1,0 +1,2 @@
+C:/Users/Alexis/Documents/UTH/5A/Carlitos/fluttersito/appmltpltfrm_carlos_ti/android/app/.cxx/Debug/634r5h3e/x86/CMakeFiles/edit_cache.dir
+C:/Users/Alexis/Documents/UTH/5A/Carlitos/fluttersito/appmltpltfrm_carlos_ti/android/app/.cxx/Debug/634r5h3e/x86/CMakeFiles/rebuild_cache.dir

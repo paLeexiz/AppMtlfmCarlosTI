@@ -1,6 +1,13 @@
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/Ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_tickets.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/crear-actualizar_empleado.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/incidencias.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_empleados.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/chat_c-o.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/login.dart';
 import 'package:flutter/material.dart';
 
 // final List<Ticket> tickets = [
@@ -22,9 +29,17 @@ import 'package:flutter/material.dart';
 // ];
 void main() {
   runApp(MaterialApp(
-    // home:DetallesTicket()
-    // home:DetallesTicket()
-    home:ListaTickets(),//tickets: tickets),
+    home: Login()
+    // home: DetallesTicket()
+    // home: Incidencias(),
+    // home: ChatScreen(),
+    // home: ListaServicios(),
+    // home: ContratarPaquetes(),
+    // home: PackagesView(),
+    // home: EmployeeFormExample(isEditing: false,),
+    // home: ListaEmpleados(),
+    // home: LevantarTicket(id: 13,),
+
   ));
 }
 

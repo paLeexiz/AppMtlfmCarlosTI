@@ -1,4 +1,4 @@
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/Ticket.dart';
+
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,11 @@ class DetallesTicket extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detalles del Ticket'),
+        title: Text(
+          'Detalles del Ticket',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF1A5C9E),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
         future: obtieneTicket(),
@@ -25,75 +29,72 @@ class DetallesTicket extends StatelessWidget {
           } else {
             final ticket = snapshot.data!;
 
-            return Stack(
-              children: [
-                SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minWidth: MediaQuery.of(context).size.width,
-                      minHeight: MediaQuery.of(context).size.height,
-                    ), 
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DataTable(
-                            columns: [
-                              DataColumn(label: Text('Informacion')),
-                              DataColumn(label: Text('del ticket'))
-                            ],
-                            rows: ticket.keys.map((key) => DataRow(cells: [
-                              DataCell(Text(key)),
-                              DataCell(Text(ticket[key].toString()))
-                            ])).toList()
-
-                            // [
-                            //   DataRow(
-                            //     cells: [
-                            //       DataCell(
-                            //         Text(
-                            //           'Título',
-                            //           style: Theme.of(context).textTheme.bodyMedium,
-                            //         ),
-                            //       ),
-                            //       DataCell(
-                            //         Text(
-                            //           'titulo',
-                            //           style: Theme.of(context).textTheme.bodyMedium,
-                            //         ),
-                            //       )
-                            //     ]
-                            //   ),
-                            //   DataRow(
-                            //     cells: [
-                            //       DataCell(
-                            //         Text(
-                            //           'Descripción',
-                            //           style: Theme.of(context).textTheme.bodyMedium,
-                            //         ),
-                            //       ),
-                            //       DataCell(
-                            //         Text(
-                            //           'titulo',
-                            //           style: Theme.of(context).textTheme.bodyMedium,
-                            //         ),
-                            //       )
-                            //     ]
-                            //   )
-                            // ],
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: MediaQuery.of(context).size.width,
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ],
-                      ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Información del Ticket',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: const Color(0xFF1A5C9E),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                DataTable(
+                                  columnSpacing: 8,
+                                  headingRowHeight: 8,
+                                  columns: [
+                                    DataColumn(label: Text('')),
+                                    DataColumn(label: Text('')),
+                                  ],
+                                  rows: ticket.keys
+                                      .map((key) => DataRow(cells: [
+                                            DataCell(
+                                              Text(key,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ),
+                                            DataCell(
+                                                Text(ticket[key].toString())),
+                                          ]))
+                                      .toList(),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ]
+              ),
             );
           }
-        }
-      )
+        },
+      ),
     );
   }
 
