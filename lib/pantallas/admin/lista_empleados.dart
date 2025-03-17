@@ -633,6 +633,7 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
   }
 }
 
+// ignore: must_be_immutable
 class GlassTextField extends StatelessWidget {
   final TextEditingController b;
   final String hintText;

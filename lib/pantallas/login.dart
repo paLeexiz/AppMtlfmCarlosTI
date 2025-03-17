@@ -1,8 +1,8 @@
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_tickets.dart'
     as admin;
-import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/lista_tickets.dart' as cliente;
 import 'package:appmltpltfrm_carlos_ti/pantallas/operador/lista_tickets.dart'
     as operador;

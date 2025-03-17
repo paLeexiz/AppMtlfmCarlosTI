@@ -435,7 +435,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
   }
 
   Future<void> crearEmpleado(cuerpo) async {
-    final resultado = await ApiService.solicitud(
+    // final resultado = 
+    await ApiService.solicitud(
       tabla: 'crearEmpleado',
       metodo: 'post',
       cuerpo: cuerpo,
@@ -443,7 +444,8 @@ class _EmployeeFormState extends State<EmployeeForm> {
   }
 
   Future<void> putEmpleado(cuerpo) async {
-    final resultado = await ApiService.solicitud(
+    // final resultado = 
+    await ApiService.solicitud(
       tabla: 'putEmpleado',
       metodo: 'put',
       id: widget.employeeData!['id_operador'].toString(),

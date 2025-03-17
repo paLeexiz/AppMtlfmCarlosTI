@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/chat_c-o.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/login.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
@@ -217,6 +217,7 @@ class _ListaTicketsState extends State<ListaTickets> {
   }
 }
 
+// ignore: must_be_immutable
 class GlassTextField extends StatelessWidget {
   final int id;
   final TextEditingController b;
