@@ -27,19 +27,12 @@ import 'package:flutter/material.dart';
 //     estado: 'Abierto',
 //   ),
 // ];
-void main() {
-  runApp(MaterialApp(
+void main() { runApp(MaterialApp(
     home: Login()
     // home: DetallesTicket()
-    // home: Incidencias(),
     // home: ChatScreen(),
     // home: ListaServicios(),
-    // home: ContratarPaquetes(),
-    // home: PackagesView(),
-    // home: EmployeeFormExample(isEditing: false,),
-    // home: ListaEmpleados(),
     // home: LevantarTicket(id: 13,),
-
   ));
 }
 

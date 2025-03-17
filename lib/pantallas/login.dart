@@ -1,8 +1,11 @@
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_tickets.dart' as admin;
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_tickets.dart'
+    as admin;
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/operador/lista_tickets.dart' as operador;
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/lista_tickets.dart' as cliente;
+import 'package:appmltpltfrm_carlos_ti/pantallas/operador/lista_tickets.dart'
+    as operador;
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
@@ -52,9 +55,8 @@ class _LoginState extends State<Login> {
               height: 1200,
               width: 1200,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 42, 75, 168),
-                borderRadius: BorderRadius.all(Radius.circular(600))
-              ),
+                  color: Color.fromARGB(255, 42, 75, 168),
+                  borderRadius: BorderRadius.all(Radius.circular(600))),
             ),
           ),
           Positioned(
@@ -64,9 +66,8 @@ class _LoginState extends State<Login> {
               height: 1000,
               width: 1000,
               decoration: BoxDecoration(
-                color: Color(0xFF1E3A8A),
-                borderRadius: BorderRadius.all(Radius.circular(500))
-              ),
+                  color: Color(0xFF1E3A8A),
+                  borderRadius: BorderRadius.all(Radius.circular(500))),
             ),
           ),
 
@@ -90,11 +91,13 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextButton(onPressed: (){
-                        // Navigator.push(context, MaterialPageRoute(
-                        //   builder: (context) => admin.ListaTickets(id: 8)
-                        // ));
-                      }, child: Text('Registrarse'))
+                      TextButton(
+                          onPressed: () {
+                            // Navigator.push(context, MaterialPageRoute(
+                            //   builder: (context) => admin.ListaTickets(id: 8)
+                            // ));
+                          },
+                          child: Text('Registrarse'))
                     ],
                   ),
                 ),
@@ -125,7 +128,8 @@ class _LoginState extends State<Login> {
                             ),
                             child: TextField(
                               controller: username,
-                              style: TextStyle(color: Colors.white, fontSize: 14),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
                               decoration: InputDecoration(
                                 hintText: 'Ingrese su nombre de usuario',
                                 hintStyle: TextStyle(color: Colors.white60),
@@ -154,7 +158,8 @@ class _LoginState extends State<Login> {
                             child: TextField(
                               controller: password,
                               obscureText: true,
-                              style: TextStyle(color: Colors.white, fontSize: 14),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
                               decoration: InputDecoration(
                                 hintText: 'Ingrese su contraseña',
                                 hintStyle: TextStyle(color: Colors.white60),
@@ -217,9 +222,11 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> login() async {
-    // setState(() {
+    setState(() {
+      cargando = true;
+
       mensajeError = '';
-    // });
+    });
     final user = username.text;
     final pass = password.text;
 
@@ -233,20 +240,28 @@ class _LoginState extends State<Login> {
       // Si hay un error, no deberías navegar a ListaTickets
       if (resultado['error'] == null) {
         // print(resultado[]);
+        
         Navigator.push(
           context,
-          resultado['rol'] == 'admin' 
-            ? MaterialPageRoute(builder: (context) => admin.ListaTickets(id: resultado['id']))
-            : resultado['rol'] == 'operador' 
-              ? MaterialPageRoute(builder: (context) => operador.ListaTickets(id: resultado['id']))
-              : MaterialPageRoute(builder: (context) => LevantarTicket(id: resultado['id_cliente'])),
+          resultado['rol'] == 'admin'
+              ? MaterialPageRoute(
+                  builder: (context) => admin.ListaTickets(id: resultado['id']))
+              : resultado['rol'] == 'operador'
+                  ? MaterialPageRoute(
+                      builder: (context) =>
+                          operador.ListaTickets(id: resultado['id']))
+                  : MaterialPageRoute(
+                      builder: (context) =>
+                          cliente.ListaTickets(id: resultado['id_cliente'])),
         );
       } else {
         setState(() {
-          cargando = false;
           mensajeError = 'Datos incorrectos';
         });
       }
+      setState(() {
+          cargando = false;
+        });
     } catch (e) {
       setState(() {
         cargando = false;

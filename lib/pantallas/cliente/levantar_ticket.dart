@@ -13,19 +13,17 @@ class LevantarTicket extends StatefulWidget {
 class _LevantarTicketState extends State<LevantarTicket> {
   // Controladores
   final TextEditingController _descripcionController = TextEditingController();
-  
+
   // Variables para las selecciones
-  String? _selectedCategoria;
-  String? _selectedServicio;
-  String? _selectedPaquete;
+  int? _selectedcategoria;
+  int? _selectedPaquete;
   String _selectedPrioridad = 'Media';
-  
+
   // Listas para los dropdowns
-  List<dynamic> _servicios = [];
+  List<dynamic> _categorias = [];
   List<dynamic> _paquetes = [];
-  List<String> _categorias = ['Hardware', 'Software', 'Red', 'Cuenta', 'Otro'];
-  List<String> _prioridades = ['Baja', 'Media', 'Alta', 'Crítica'];
-  
+  final List<String> _prioridades = ['Baja', 'Media', 'Alta'];
+
   // Estado de carga
   bool _isLoading = false;
 
@@ -39,13 +37,13 @@ class _LevantarTicketState extends State<LevantarTicket> {
     setState(() {
       _isLoading = true;
     });
-    
+
     try {
-      final serviciosResult = await obtieneServicios();
-      final paquetesResult = await obtienePaquetes();
-      
+      final categoriasResult = await obtienecategorias();
+      final paquetesResult = await a();
+
       setState(() {
-        _servicios = serviciosResult;
+        _categorias = categoriasResult;
         _paquetes = paquetesResult;
         _isLoading = false;
       });
@@ -92,24 +90,37 @@ class _LevantarTicketState extends State<LevantarTicket> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Sección de información del ticket
-                  _buildSectionTitle('Información del Ticket', Icons.info_outline),
+                  _buildSectionTitle(
+                      'Información del Ticket', Icons.info_outline),
                   SizedBox(height: 16),
-                  
+
                   // Categoría
                   _buildDropdownLabel('Categoría'),
-                  _buildDropdown<String>(
+                  FutureBuilder<List<dynamic>>(
+                    future: Future.value(_categorias),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text('Error: ${snapshot.error}');
+                      } else {
+                        final paquetes = snapshot.data ?? [];
+                        return 
+                  _buildDropdown<dynamic>(
                     items: _categorias,
-                    value: _selectedCategoria,
+                    value: _selectedcategoria,
                     hint: 'Selecciona una categoría',
                     onChanged: (value) {
                       setState(() {
-                        _selectedCategoria = value;
+                        _selectedcategoria = value;
                       });
                     },
-                    itemBuilder: (item) => Text(item),
+                    itemBuilder: (item, d, s) => Text(item + '\n' + d),
+                  );}
+                    },
                   ),
                   SizedBox(height: 20),
-                  
+
                   // Paquete
                   _buildDropdownLabel('Paquete'),
                   FutureBuilder<List<dynamic>>(
@@ -121,8 +132,8 @@ class _LevantarTicketState extends State<LevantarTicket> {
                         return Text('Error: ${snapshot.error}');
                       } else {
                         final paquetes = snapshot.data ?? [];
-                        return _buildDropdown<String>(
-                          items: paquetes.map<String>((p) => p['nombre_paquete'] as String).toList(),
+                        return _buildDropdown<dynamic>(
+                          items: paquetes,
                           value: _selectedPaquete,
                           hint: 'Selecciona un paquete',
                           onChanged: (value) {
@@ -130,13 +141,13 @@ class _LevantarTicketState extends State<LevantarTicket> {
                               _selectedPaquete = value;
                             });
                           },
-                          itemBuilder: (item) => Text(item),
+                          itemBuilder: (item, d, s) => Text(item + '\n' + d + '\n' + s),
                         );
                       }
                     },
                   ),
                   SizedBox(height: 20),
-                  
+
                   // Prioridad
                   _buildDropdownLabel('Prioridad'),
                   Container(
@@ -146,7 +157,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
                       children: _prioridades.map((prioridad) {
                         final isSelected = _selectedPrioridad == prioridad;
                         Color chipColor;
-                        
+
                         switch (prioridad) {
                           case 'Baja':
                             chipColor = Colors.green;
@@ -157,24 +168,23 @@ class _LevantarTicketState extends State<LevantarTicket> {
                           case 'Alta':
                             chipColor = Colors.orange;
                             break;
-                          case 'Crítica':
-                            chipColor = Colors.red;
-                            break;
                           default:
                             chipColor = Colors.grey;
                         }
-                        
+
                         return ChoiceChip(
                           label: Text(
                             prioridad,
                             style: TextStyle(
                               color: isSelected ? Colors.white : chipColor,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                              fontWeight: isSelected
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                             ),
                           ),
                           selected: isSelected,
                           selectedColor: chipColor,
-                          backgroundColor: chipColor.withOpacity(0.1),
+                          backgroundColor: chipColor.withValues(alpha: 0.1),
                           onSelected: (selected) {
                             if (selected) {
                               setState(() {
@@ -187,9 +197,10 @@ class _LevantarTicketState extends State<LevantarTicket> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  
+
                   // Descripción
-                  _buildSectionTitle('Descripción del Problema', Icons.description),
+                  _buildSectionTitle(
+                      'Descripción del Problema', Icons.description),
                   SizedBox(height: 16),
                   Container(
                     decoration: BoxDecoration(
@@ -214,7 +225,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
                     ),
                   ),
                   SizedBox(height: 32),
-                  
+
                   // Botón de envío
                   SizedBox(
                     width: double.infinity,
@@ -277,24 +288,26 @@ class _LevantarTicketState extends State<LevantarTicket> {
 
   Widget _buildDropdown<T>({
     required List<T> items,
-    required T? value,
+    required int? value,
     required String hint,
-    required void Function(T?) onChanged,
-    required Widget Function(T) itemBuilder,
+    required void Function(dynamic?) onChanged,
+    required Widget Function(T, T, T) itemBuilder,
   }) {
+    var nombres =
+        items.map((item) => item).toList();
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: Offset(0, 4),
           ),
         ],
       ),
-      child: DropdownButtonFormField<T>(
+      child: DropdownButtonFormField<dynamic>(
         value: value,
         hint: Text(hint),
         decoration: InputDecoration(
@@ -302,9 +315,17 @@ class _LevantarTicketState extends State<LevantarTicket> {
           contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         ),
         items: items.map((item) {
-          return DropdownMenuItem<T>(
-            value: item,
-            child: itemBuilder(item),
+          var nombres =(item as Map).values.map((e) => e).toList();
+
+          return DropdownMenuItem<dynamic>(
+            value: nombres[0],
+            // value: (item as Map)['nombre_paquete']),
+            child: itemBuilder(
+              nombres[1],
+              nombres[2],
+              nombres.length > 4 ? nombres[4] : ''
+            )
+            // child: itemBuilder((item as Map)['nombre_paquete']),
           );
         }).toList(),
         onChanged: onChanged,
@@ -317,52 +338,219 @@ class _LevantarTicketState extends State<LevantarTicket> {
 
   void _submitTicket() {
     // Validar campos
-    if (_selectedCategoria == null || 
-        _selectedServicio == null || 
-        _selectedPaquete == null || 
+    if (_selectedcategoria == null ||
+        _selectedPaquete == null ||
         _descripcionController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Por favor completa todos los campos')),
       );
       return;
     }
-    
+
     // Preparar datos para enviar
     final ticketData = {
-      'id_usuario': widget.id,
-      'categoria': _selectedCategoria,
-      'servicio': _selectedServicio,
+      'id_cliente': widget.id,
+      'categoria': _selectedcategoria,
       'paquete': _selectedPaquete,
       'prioridad': _selectedPrioridad,
       'descripcion': _descripcionController.text.trim(),
     };
-    
+
     // Aquí iría la lógica para enviar el ticket
+    insertTicket(ticketData);
     print('Enviando ticket: $ticketData');
-    
+
     // Mostrar confirmación
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Ticket creado con éxito')),
     );
-    
+
     // Volver a la pantalla anterior
     Navigator.pop(context);
   }
 
-  Future<List<dynamic>> obtieneServicios() async {
+  Future<void> insertTicket(c) async {
+    await ApiService.solicitud(
+      tabla: 'tickets',
+      metodo: 'post',
+      cuerpo: c
+    );
+  }
+  Future<List<dynamic>> obtienecategorias() async {
     final resultado = await ApiService.solicitud(
-      tabla: 'servicios',
+      tabla: 'categories',
       metodo: 'get',
     );
     return resultado;
   }
-  
+
+  Future<List<dynamic>> a() async {
+    var packs = await obtienePaquetes();
+    var packsC = await obtienePaquetesC();
+    var values =
+        packsC.map((element) => element['id_paquetes_servicios']).toList();
+    print(packs);
+    print(packsC);
+    print(values);
+    return packs
+        .where((element) => values.contains(element['id_paquete']))
+        .toList();
+  }
+
   Future<List<dynamic>> obtienePaquetes() async {
+    final resultado =
+        await ApiService.solicitud(tabla: 'obtenerPaquetes', metodo: 'get');
+    return resultado;
+  }
+
+  Future<List<dynamic>> obtienePaquetesC() async {
     final resultado = await ApiService.solicitud(
-      tabla: 'paquetes',
-      metodo: 'get',
-    );
+        tabla: 'obtenerPaquetesC', metodo: 'get', id: widget.id.toString());
     return resultado;
   }
 }
 
+class PackageCard extends StatelessWidget {
+  final Map<String, dynamic> package;
+
+  const PackageCard({
+    Key? key,
+    required this.package,
+  }) : super(key: key);
+
+  IconData getServiceIcon(String service) {
+    switch (service.toLowerCase()) {
+      case 'internet':
+        return Icons.wifi;
+      case 'telefonia':
+        return Icons.phone;
+      case 'streaming de video':
+        return Icons.video_library;
+      case 'streaming de musica':
+        return Icons.music_note;
+      default:
+        return Icons.check_circle;
+    }
+  }
+
+  Color getPackageColor() {
+    switch (package['nombre_paquete'].toString().toLowerCase()) {
+      case 'premium':
+        return Color(0xFF2563EB); // Azul
+      case 'combinado':
+        return Color(0xFF059669); // Verde
+      case 'estandar hogar':
+        return Color(0xFFD97706); // Naranja
+      default:
+        return Color(0xFF6B7280); // Gris
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final color = getPackageColor();
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      child: Material(
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+        elevation: 0,
+        child: Container(
+          padding: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[200]!),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Encabezado del paquete
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Nombre y tipo de paquete
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        package['nombre_paquete'],
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: color,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Precio
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: color.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      '\$${package['precio']}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              // Descripción
+              Text(
+                package['descripcion'],
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: 16),
+
+              // Servicios relacionados
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: (package['servicios_relacionados'].split(', ')
+                        as List<String>)
+                    .map((service) {
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          getServiceIcon(service),
+                          size: 16,
+                          color: color,
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          service,
+                          style: TextStyle(
+                            color: Colors.grey[800],
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

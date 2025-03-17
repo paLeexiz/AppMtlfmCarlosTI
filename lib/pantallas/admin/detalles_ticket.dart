@@ -1,4 +1,3 @@
-
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +27,21 @@ class DetallesTicket extends StatelessWidget {
             return Center(child: Text('No hay tickets disponibles'));
           } else {
             final ticket = snapshot.data!;
-
+            final tickets = Map.from(ticket)
+              ..removeWhere((key, value) {
+                // Add your condition here to remove the elements you don't want to keep
+                // For example, to remove entries with a specific key:
+                // return key == 'undesired_key';
+                return key != 'nombre' &&
+                    key != 'username' &&
+                    key != 'email' &&
+                    key != 'ultimo_acceso' &&
+                    key != 'estado' &&
+                    key != 'departamento' &&
+                    key != 'dias_laborales' &&
+                    key != 'fecha_registro' &&
+                    key != 'turno'; // Modify this condition as needed
+              });
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
@@ -69,7 +82,7 @@ class DetallesTicket extends StatelessWidget {
                                     DataColumn(label: Text('')),
                                     DataColumn(label: Text('')),
                                   ],
-                                  rows: ticket.keys
+                                  rows: tickets.keys
                                       .map((key) => DataRow(cells: [
                                             DataCell(
                                               Text(key,
@@ -78,7 +91,7 @@ class DetallesTicket extends StatelessWidget {
                                                           FontWeight.bold)),
                                             ),
                                             DataCell(
-                                                Text(ticket[key].toString())),
+                                                Text(tickets[key].toString())),
                                           ]))
                                       .toList(),
                                 ),
