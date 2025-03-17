@@ -3,6 +3,7 @@ import 'dart:ui';
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/chat_c-o.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/login.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
@@ -242,6 +243,7 @@ class _ListaTicketsState extends State<ListaTickets> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 7, vertical: 7),
                               child: GlassTextField(
+                                  id: widget.id,
                                   b: b,
                                   hintText:
                                       'Estado/Paquete/Operador/Categoria/Prioridad',
@@ -624,12 +626,15 @@ class _ListaTicketsState extends State<ListaTickets> {
 }
 
 class GlassTextField extends StatelessWidget {
+  final int id;
   final TextEditingController b;
   final String hintText;
   List<dynamic>? tickets;
   final snapshot;
   GlassTextField(
-      {super.key, required this.b,
+      {super.key,
+      required this.id,
+      required this.b,
       required this.hintText,
       required this.tickets,
       required this.snapshot});
@@ -904,7 +909,8 @@ class GlassTextField extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      DetallesTicket(id_Ticket: ticket['id']),
+                                      ChatScreen(idRemitente: id, idTicket: ticket['id']),
+                                      // DetallesTicket(id_Ticket: ticket['id']),
                                 ),
                               );
                             },
