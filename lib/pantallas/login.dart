@@ -1,9 +1,11 @@
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_tickets.dart'
     as admin;
-import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/principal.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/lista_tickets.dart' as cliente;
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/principal.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/operador/lista_tickets.dart'
     as operador;
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
@@ -91,13 +93,6 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      TextButton(
-                          onPressed: () {
-                            // Navigator.push(context, MaterialPageRoute(
-                            //   builder: (context) => admin.ListaTickets(id: 8)
-                            // ));
-                          },
-                          child: Text('Registrarse'))
                     ],
                   ),
                 ),
@@ -245,14 +240,16 @@ class _LoginState extends State<Login> {
           context,
           resultado['rol'] == 'admin'
               ? MaterialPageRoute(
-                  builder: (context) => admin.ListaTickets(id: resultado['id']))
+                  builder: (context) =>
+                    // admin.ListaTickets(id: resultado['id']))
+                    AdminPrincipal())
               : resultado['rol'] == 'operador'
                   ? MaterialPageRoute(
                       builder: (context) =>
                           operador.ListaTickets(id: resultado['id']))
                   : MaterialPageRoute(
                       builder: (context) =>
-                          cliente.ListaTickets(id: resultado['id_cliente'])),
+                          ClientePrincipal(id: resultado['id_cliente'])),
         );
       } else {
         setState(() {

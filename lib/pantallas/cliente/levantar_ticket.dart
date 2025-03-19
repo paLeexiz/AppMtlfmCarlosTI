@@ -104,7 +104,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
                       } else if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else {
-                        final paquetes = snapshot.data ?? [];
+                        // final paquetes = snapshot.data ?? [];
                         return 
                   _buildDropdown<dynamic>(
                     items: _categorias,
@@ -290,11 +290,11 @@ class _LevantarTicketState extends State<LevantarTicket> {
     required List<T> items,
     required int? value,
     required String hint,
-    required void Function(dynamic?) onChanged,
+    required void Function(dynamic) onChanged,
     required Widget Function(T, T, T) itemBuilder,
   }) {
-    var nombres =
-        items.map((item) => item).toList();
+    // var nombres =
+    //     items.map((item) => item).toList();
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

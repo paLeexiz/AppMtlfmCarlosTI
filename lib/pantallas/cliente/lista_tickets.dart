@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
+// import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/chat_c-o.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/login.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +72,7 @@ class _ListaTicketsState extends State<ListaTickets> {
                     children: [
                       IconButton(
                         icon: Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Login())),
+                        onPressed: () => Navigator.pop(context),
                       ),
                       Text(
                         'Cliente',
@@ -122,6 +124,10 @@ class _ListaTicketsState extends State<ListaTickets> {
                           ),
                         ),
                         SizedBox(width: 22),
+                        TextButton(
+                          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => ContratarPaquetes(id: widget.id)));},
+                          child: Text('levaanta ticket')
+                        )
                       ],
                     ),
                   ),
@@ -210,13 +216,15 @@ class _ListaTicketsState extends State<ListaTickets> {
 
   Future<List<dynamic>> obtieneTickets() async {
     final resultado = await ApiService.solicitud(
-      tabla: 'ticketsCliente/${widget.id}',
+      tabla: 'ticketsCliente/',
       metodo: 'get',
+      id: widget.id.toString()
     );
     return resultado;
   }
 }
 
+// ignore: must_be_immutable
 class GlassTextField extends StatelessWidget {
   final int id;
   final TextEditingController b;

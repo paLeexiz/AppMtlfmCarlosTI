@@ -7,7 +7,7 @@ class ListaServicios extends StatefulWidget {
 }
 
 class _ListaServiciosState extends State<ListaServicios> {
-  late Future<List<dynamic>> _serviciosFuture;
+  // late Future<List<dynamic>> _serviciosFuture;
 
   @override
   Widget build(BuildContext context) {
@@ -272,19 +272,22 @@ class _ListaServiciosState extends State<ListaServicios> {
   }
 
   Future<void> creaServicio(value) async {
-    final resultado = await ApiService.solicitud(
+    // final resultado = 
+    await ApiService.solicitud(
         tabla: 'crearServicio', metodo: 'post', cuerpo: {'nombre': value});
     // return resultado;
   }
 
   Future<void> eliminaServicio(id) async {
-    final resultado = await ApiService.solicitud(
+    // final resultado = 
+    await ApiService.solicitud(
         tabla: 'eliminarServicio', metodo: 'delete', id: id.toString());
     // return resultado;
   }
 
   Future<void> editaServicio(id, nombre) async {
-    final resultado = await ApiService.solicitud(
+    // final resultado = 
+    await ApiService.solicitud(
         tabla: 'editarServicio',
         metodo: 'put',
         id: id.toString(),

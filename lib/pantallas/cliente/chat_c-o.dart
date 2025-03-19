@@ -38,7 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
     id_usuario = await obtenerIDUsuarioPorCliente();
   }
   Future<void> actualizarLeidoMensaje() async {
-    final resultado = await ApiService.solicitud(
+    /*final resultado = */await ApiService.solicitud(
         tabla: 'actualizarLeidoMensaje',
         metodo: 'put',
         cuerpo: {
@@ -133,7 +133,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           obtenerMensajesTicket();
                         });
                       },
-                      color: Colors.teal,
+                      color: const Color.fromARGB(255, 0, 150, 32),
                     ),
                   ],
                 ),
