@@ -119,54 +119,6 @@ class _ListaTicketsState extends State<ListaTickets> {
                           ),
                         ),
                         SizedBox(width: 22),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ListaEmpleados()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                            //  const Color(0xFF1A5C9E),
-                                Color(0xFFFD7238), // Morado pastel claro
-                            foregroundColor: Color(0xFFEEEEEE), // Morado oscuro
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 5),
-                          ),
-                          child: Text(
-                            'Marcar entrada',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ListaServicios()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                            //  const Color(0xFF1A5C9E),
-                              Color(0xFFFD7238), // Morado pastel claro
-                            foregroundColor: Color(0xFFEEEEEE), // Morado oscuro
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 5),
-                          ),
-                          child: Text(
-                            'Servicios',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -596,7 +548,7 @@ class GlassTextField extends StatelessWidget {
       borderRadius:
           BorderRadius.circular(20), // Bordes redondeados para el efecto
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 0, sigmaY: 16), // Desenfoque
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 7), // Desenfoque
         child: Container(
           decoration: BoxDecoration(
             // color: const Color(0x33FD7238), // Fondo semitransparente

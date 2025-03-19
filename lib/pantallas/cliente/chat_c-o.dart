@@ -133,7 +133,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           obtenerMensajesTicket();
                         });
                       },
-                      color: Colors.teal,
+                      color: const Color.fromARGB(255, 0, 150, 32),
                     ),
                   ],
                 ),
