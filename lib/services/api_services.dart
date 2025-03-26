@@ -8,8 +8,9 @@ class ApiService {
   static const Map<String, dynamic> defaultCuerpo = {'': 0};
   static Future<dynamic> solicitud({required String tabla, required String metodo, String id = '', Map cuerpo = defaultCuerpo}) async {
     final url = Uri.parse('http://127.0.0.1:8000/api/$tabla/$id'); //para la lap
-    //  final url = Uri.parse('http://192.168.137.1:8000/api/$tabla/$id'); //para el celular
-    // final url = Uri.parse('http://172.20.5.148:8000/api/$tabla/$id');
+    // final url = Uri.parse('http://172.20.2.39:8000/api/$tabla/$id'); //para el celular
+    //  final url = Uri.parse('http://172.20.7.230:8000/api/$tabla/$id');
+
     dynamic response='';
     switch (metodo) {
       case 'get':

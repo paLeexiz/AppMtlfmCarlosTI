@@ -115,7 +115,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
                         _selectedcategoria = value;
                       });
                     },
-                    itemBuilder: (item, d, s) => Text(item + '\n' + d),
+                    itemBuilder: (item, d) => Text(item + '\n' + d),
                   );}
                     },
                   ),
@@ -141,7 +141,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
                               _selectedPaquete = value;
                             });
                           },
-                          itemBuilder: (item, d, s) => Text(item + '\n' + d + '\n' + s),
+                          itemBuilder: (item, d) => Text(item + '\n' + d),
                         );
                       }
                     },
@@ -291,7 +291,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
     required int? value,
     required String hint,
     required void Function(dynamic) onChanged,
-    required Widget Function(T, T, T) itemBuilder,
+    required Widget Function(T, T) itemBuilder,
   }) {
     // var nombres =
     //     items.map((item) => item).toList();
@@ -323,7 +323,7 @@ class _LevantarTicketState extends State<LevantarTicket> {
             child: itemBuilder(
               nombres[1],
               nombres[2],
-              nombres.length > 4 ? nombres[4] : ''
+              // nombres.length > 4 ? nombres[4] : ''
             )
             // child: itemBuilder((item as Map)['nombre_paquete']),
           );

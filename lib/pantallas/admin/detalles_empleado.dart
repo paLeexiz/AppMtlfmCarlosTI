@@ -42,6 +42,7 @@ class DetallesEmpleado extends StatelessWidget {
                     return key != 'nombre' &&
                         key != 'username' &&
                         key != 'email' &&
+                        key != 'telefono' &&
                         key != 'ultimo_acceso' &&
                         key != 'estado' &&
                         key != 'departamento' &&

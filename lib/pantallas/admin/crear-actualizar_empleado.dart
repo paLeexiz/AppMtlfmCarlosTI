@@ -75,7 +75,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
       _emailController =
           TextEditingController(text: widget.employeeData!['email'] ?? '');
       _phoneController = TextEditingController(
-          text: widget.employeeData!['departamento'] ?? '');
+          text: widget.employeeData!['telefono'] ?? '');
 
       // Inicializar selecciones con datos existentes
       _selectedDepartment =
@@ -112,8 +112,9 @@ class _EmployeeFormState extends State<EmployeeForm> {
           'nombre': _nameController.text,
           'username': _usernameController.text,
           'email': _emailController.text,
+          'telefono': _phoneController.text,
           'depa': _selectedDepartment,
-          'turno': _selectedTurno,
+          'turno': _turnos[_selectedTurno],
           'dias': _selectedDays.join(','),
           'id': widget.employeeData!['id_usuario'],
         };
@@ -132,7 +133,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
           'password': _passController.text,
           'depa': _selectedDepartment,
           'turno': _selectedTurno,
-            'dias': _selectedDays.join(','),
+          'dias': _selectedDays.join(','),
         };
         crearEmpleado(employeeData);
         ScaffoldMessenger.of(context)
@@ -309,6 +310,7 @@ class _EmployeeFormState extends State<EmployeeForm> {
                           value: _selectedTurno,
                           items: _turnos.keys.toList(),
                           onChanged: (value) {
+                            print(value);
                             setState(() {
                               _selectedTurno = value!;
                             });
