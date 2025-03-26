@@ -177,314 +177,7 @@ class _ListaTicketsState extends State<ListaTickets> {
                                   hintText: 'Estado/Paquete/Operador/Categoria/Prioridad',
                                   tickets: tickets,
                                   snapshot: snapshot)
-                              // TextField(
-                              //     controller: b,
-                              //     cursorColor: Color(0xdd1A5C9E),
-                              //     cursorRadius: Radius.circular(3),
-                              //     cursorHeight: 19,
-                              //     cursorWidth: 2.4,
-                              //     cursorOpacityAnimates: true,
-                              //     decoration: InputDecoration(
-                              //       contentPadding: EdgeInsets.symmetric(
-                              //           //con el conentPadding puedo ajustar el tamaño
-                              //           //de la tabla independientemente del TextField
-                              //           horizontal: -57,
-                              //           vertical: 9),
-                              //       hintText: 'Estado/Paquete/Operador',
-                              //       hintStyle: TextStyle(
-                              //         color: Color(0xFF342E37),
-                              //         fontSize: 13,
-                              //       ),
-                              //       prefixIcon: Icon(Icons.search),
-                              //       border: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(30),
-                              //         borderSide: BorderSide.none,
-                              //       ),
-                              //       isDense: true,
-                              //       filled: true,
-                              //       fillColor: const Color(0xf7FFE0D3),
-                              //     ),
-                              //     buildCounter: (BuildContext context,
-                              //         {required int currentLength,
-                              //         required bool isFocused,
-                              //         required int? maxLength}) {
-                              //       // setState(() {
-                              //       tickets = snapshot.data!.where((ticket) {
-                              //         return ticket['prioridad']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['estado_ticket']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['nombre_categoria']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['nombre_paquete']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['nombre_operador']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase());
-                              //       }).toList();
-                              //       // });
-                              //       return Center(
-                              //           child: Container(
-                              //         margin: EdgeInsets.only(top: 9),
-                              //         decoration: BoxDecoration(
-                              //           color: const Color(0xFFffffFF),
-                              //           borderRadius: BorderRadius.circular(20),
-                              //           boxShadow: [
-                              //             BoxShadow(
-                              //               color: Colors.grey.withOpacity(0.2),
-                              //               spreadRadius: 1,
-                              //               blurRadius: 9,
-                              //               offset: Offset(0, 0),
-                              //             ),
-                              //           ],
-                              //         ),
-                              //         child: ClipRRect(
-                              //           borderRadius: BorderRadius.circular(20),
-                              //           child: SingleChildScrollView(
-                              //             scrollDirection: Axis.horizontal,
-                              //             child: SingleChildScrollView(
-                              //               child: DataTable(
-                              //                 horizontalMargin: 13,
-                              //                 columnSpacing: 18,
-                              //                 dataRowHeight: 64,
-                              //                 showCheckboxColumn: false,
-                              //                 headingRowHeight: 40,
-                              //                 headingRowColor:
-                              //                     WidgetStateProperty.all(
-                              //                   Color(0xFFF9F9F9),
-                              //                 ),
-                              //                 dataRowColor: WidgetStateProperty.all(
-                              //                   Color(0xFFF9F9F9),
-                              //                 ),
-                              //                 columns: [
-                              //                   DataColumn(
-                              //                     label: Text(
-                              //                       'Categoria',
-                              //                       style: TextStyle(
-                              //                         fontWeight: FontWeight.bold,
-                              //                         color: Color(0xFF342E37),
-                              //                       ),
-                              //                     ),
-                              //                     headingRowAlignment:
-                              //                         MainAxisAlignment.center,
-                              //                   ),
-                              //                   DataColumn(
-                              //                     label: Text(
-                              //                       'Descripción',
-                              //                       style: TextStyle(
-                              //                         fontWeight: FontWeight.bold,
-                              //                         color: Color(0xFF342E37),
-                              //                       ),
-                              //                     ),
-                              //                     headingRowAlignment:
-                              //                         MainAxisAlignment.center,
-                              //                   ),
-                              //                   DataColumn(
-                              //                     label: Text(
-                              //                       'Operador',
-                              //                       style: TextStyle(
-                              //                         fontWeight: FontWeight.bold,
-                              //                         color: Color(0xFF342E37),
-                              //                       ),
-                              //                     ),
-                              //                     headingRowAlignment:
-                              //                         MainAxisAlignment.center,
-                              //                   ),
-                              //                 ],
-                              //                 rows: tickets.map((ticket) {
-                              //                   return DataRow(
-                              //                     cells: [
-                              //                       DataCell(Row(children: [
-                              //                         Icon(
-                              //                           Icons.circle,
-                              //                           color: ticket[
-                              //                                       'estado_ticket'] ==
-                              //                                   'Resuelto'
-                              //                               ? Colors.green
-                              //                               : ticket['estado_ticket'] ==
-                              //                                       'Pendiente'
-                              //                                   ? Colors.red
-                              //                                   : Colors.grey,
-                              //                           size: 15,
-                              //                         ),
-                              //                         SizedBox(width: 18),
-                              //                         Column(
-                              //                             crossAxisAlignment:
-                              //                                 CrossAxisAlignment
-                              //                                     .start,
-                              //                             children: [
-                              //                               SizedBox(height: 5),
-                              //                               Text(
-                              //                                 ticket[
-                              //                                     'nombre_categoria'],
-                              //                                 style: TextStyle(
-                              //                                   color:
-                              //                                       Colors.black87,
-                              //                                   fontSize: 18 - 3,
-                              //                                 ),
-                              //                               ),
-                              //                               SizedBox(height: 4),
-                              //                               Text(
-                              //                                 'Paquete ' +
-                              //                                     ticket[
-                              //                                         'nombre_paquete'],
-                              //                                 style: TextStyle(
-                              //                                     color: Colors
-                              //                                         .black87,
-                              //                                     fontSize: 12),
-                              //                               ),
-                              //                             ])
-                              //                       ])),
-                              //                       DataCell(Container(
-                              //                           width: 257,
-                              //                           child: Stack(
-                              //                             children: [
-                              //                               Positioned(
-                              //                                 left: 0,
-                              //                                 top: 6,
-                              //                                 child: Container(
-                              //                                   width: 196,
-                              //                                   child: Text(
-                              //                                     ticket[
-                              //                                         'descripcion_ticket'],
-                              //                                     style: TextStyle(
-                              //                                       color: Colors
-                              //                                           .black87,
-                              //                                       fontSize: 13,
-                              //                                     ),
-                              //                                   ),
-                              //                                 ),
-                              //                               ),
-                              //                               Positioned(
-                              //                                 right: 0,
-                              //                                 top: -2,
-                              //                                 child: Column(
-                              //                                     crossAxisAlignment:
-                              //                                         CrossAxisAlignment
-                              //                                             .end,
-                              //                                     children: [
-                              //                                       GestureDetector(
-                              //                                         onTap: () {
-                              //                                           String
-                              //                                               mensajeExtra =
-                              //                                               "";
-                              //                                           if (ticket[
-                              //                                                   'prioridad'] ==
-                              //                                               'Alta') {
-                              //                                             mensajeExtra =
-                              //                                                 '¡Coyelle, coyelle en verdad urge!';
-                              //                                           } else if (ticket[
-                              //                                                   'prioridad'] ==
-                              //                                               'Media') {
-                              //                                             mensajeExtra =
-                              //                                                 '¿Ya no hay prioridad alta?';
-                              //                                           } else {
-                              //                                             mensajeExtra =
-                              //                                                 'tómatelo con calma';
-                              //                                           }
-                              //                                           ScaffoldMessenger.of(
-                              //                                                   context)
-                              //                                               .showSnackBar(
-                              //                                             SnackBar(
-                              //                                               content:
-                              //                                                   Text('La prioridad es ${ticket['prioridad']}, $mensajeExtra'),
-                              //                                               backgroundColor:
-                              //                                                   Color(0xFF342E37),
-                              //                                             ),
-                              //                                           );
-                              //                                         },
-                              //                                         child: Chip(
-                              //                                           padding: EdgeInsets.symmetric(
-                              //                                               horizontal:
-                              //                                                   1.2,
-                              //                                               vertical:
-                              //                                                   0),
-                              //                                           label: Container(
-                              //                                               width: 25,
-                              //                                               child: Text(
-                              //                                                 ticket[
-                              //                                                     'prioridad'],
-                              //                                                 style:
-                              //                                                     TextStyle(
-                              //                                                   color:
-                              //                                                       const Color(0xFF000000),
-                              //                                                   fontSize:
-                              //                                                       9,
-                              //                                                 ),
-                              //                                                 textAlign:
-                              //                                                     TextAlign.center,
-                              //                                               )),
-                              //                                           shape:
-                              //                                               RoundedRectangleBorder(
-                              //                                             borderRadius:
-                              //                                                 BorderRadius.circular(
-                              //                                                     14),
-                              //                                           ),
-                              //                                           backgroundColor:
-                              //                                               const Color(
-                              //                                                   0xFFCFE8FF),
-                              //                                         ),
-                              //                                       ),
-                              //                                       Text(
-                              //                                         ticket['fecha_ticket']
-                              //                                             .toString()
-                              //                                             .substring(
-                              //                                                 0,
-                              //                                                 10),
-                              //                                         style: TextStyle(
-                              //                                             color: Colors
-                              //                                                 .black87,
-                              //                                             fontSize:
-                              //                                                 10),
-                              //                                       ),
-                              //                                     ]),
-                              //                               ),
-                              //                             ],
-                              //                           ))),
-                              //                       DataCell(
-                              //                         // SizedBox(height: 6),
-                              //                         Text(
-                              //                           ticket['nombre_operador'],
-                              //                           style: TextStyle(
-                              //                             color: Colors.black87,
-                              //                           ),
-                              //                         ),
-                              //                         // SizedBox(height: 4),
-                              //                       ),
-                              //                     ],
-                              //                     onSelectChanged: (value) {
-                              //                       Navigator.push(
-                              //                         context,
-                              //                         MaterialPageRoute(
-                              //                           builder: (context) =>
-                              //                               DetallesTicket(
-                              //                                   id_Ticket:
-                              //                                       ticket['id']),
-                              //                         ),
-                              //                       );
-                              //                     },
-                              //                     selected: false,
-                              //                     // showCheckboxColumn: false,
-                              //                   );
-                              //                 }).toList(),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ));
-                              //     },
-                              //   ),
-                              // ),
-                              )
+                             )
                         ]);
                       }
                     },
@@ -630,200 +323,204 @@ class GlassTextField extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                  child: Container(
+                    height: 579,
                     child: SingleChildScrollView(
-                      child: DataTable(
-                        horizontalMargin: 13,
-                        columnSpacing: 18,
-                        dataRowHeight: 64,
-                        showCheckboxColumn: false,
-                        headingRowHeight: 40,
-                        headingRowColor: WidgetStateProperty.all(
-                          Color(0xFFF9F9F9),
-                        ),
-                        dataRowColor: WidgetStateProperty.all(
-                          Color(0xFFF9F9F9),
-                        ),
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              'Categoria',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF342E37),
-                              ),
-                            ),
-                            headingRowAlignment: MainAxisAlignment.center,
+                      scrollDirection: Axis.vertical,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          horizontalMargin: 13,
+                          columnSpacing: 18,
+                          dataRowHeight: 64,
+                          showCheckboxColumn: false,
+                          headingRowHeight: 40,
+                          headingRowColor: WidgetStateProperty.all(
+                            Color(0xFFF9F9F9),
                           ),
-                          DataColumn(
-                            label: Text(
-                              'Descripción',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF342E37),
-                              ),
-                            ),
-                            headingRowAlignment: MainAxisAlignment.center,
+                          dataRowColor: WidgetStateProperty.all(
+                            Color(0xFFF9F9F9),
                           ),
-                          DataColumn(
-                            label: Text(
-                              'Operador',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF342E37),
-                              ),
-                            ),
-                            headingRowAlignment: MainAxisAlignment.center,
-                          ),
-                        ],
-                        rows: tickets!.map((ticket) {
-                          return DataRow(
-                            cells: [
-                              DataCell(Row(children: [
-                                Icon(
-                                  Icons.circle,
-                                  color: ticket['estado_ticket'] == 'Resuelto'
-                                      ? Colors.green
-                                      : ticket['estado_ticket'] == 'Pendiente'
-                                          ? Colors.red
-                                          : Colors.grey,
-                                  size: 14,
+                          columns: [
+                            DataColumn(
+                              label: Text(
+                                'Categoria',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF342E37),
                                 ),
-                                SizedBox(width: 18),
-                                Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(height: 5),
-                                      Text(
-                                        ticket['nombre_categoria'],
-                                        style: TextStyle(
-                                          color: Colors.black87,
-                                          fontSize: 18 - 3,
-                                        ),
-                                      ),
-                                      SizedBox(height: 4),
-                                      Text(
-                                        'Paquete ' + ticket['nombre_paquete'],
-                                        style: TextStyle(
+                              ),
+                              headingRowAlignment: MainAxisAlignment.center,
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'Descripción',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF342E37),
+                                ),
+                              ),
+                              headingRowAlignment: MainAxisAlignment.center,
+                            ),
+                            DataColumn(
+                              label: Text(
+                                'Operador',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF342E37),
+                                ),
+                              ),
+                              headingRowAlignment: MainAxisAlignment.center,
+                            ),
+                          ],
+                          rows: tickets!.map((ticket) {
+                            return DataRow(
+                              cells: [
+                                DataCell(Row(children: [
+                                  Icon(
+                                    Icons.circle,
+                                    color: ticket['estado_ticket'] == 'Resuelto'
+                                        ? Colors.green
+                                        : ticket['estado_ticket'] == 'Pendiente'
+                                            ? Colors.red
+                                            : Colors.grey,
+                                    size: 14,
+                                  ),
+                                  SizedBox(width: 18),
+                                  Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(height: 5),
+                                        Text(
+                                          ticket['nombre_categoria'],
+                                          style: TextStyle(
                                             color: Colors.black87,
-                                            fontSize: 12),
-                                      ),
-                                    ])
-                              ])),
-                              DataCell(SizedBox(
-                                  width: 257,
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        left: 0,
-                                        top: 6,
-                                        child: SizedBox(
-                                          width: 196,
-                                          child: Text(
-                                            ticket['descripcion_ticket'],
-                                            style: TextStyle(
+                                            fontSize: 18 - 3,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          'Paquete ' + ticket['nombre_paquete'],
+                                          style: TextStyle(
                                               color: Colors.black87,
-                                              fontSize: 13,
+                                              fontSize: 12),
+                                        ),
+                                      ])
+                                ])),
+                                DataCell(SizedBox(
+                                    width: 257,
+                                    child: Stack(
+                                      children: [
+                                        Positioned(
+                                          left: 0,
+                                          top: 6,
+                                          child: SizedBox(
+                                            width: 196,
+                                            child: Text(
+                                              ticket['descripcion_ticket'],
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                                fontSize: 13,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Positioned(
-                                        right: 0,
-                                        top: -2,
-                                        child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  String mensajeExtra = "";
-                                                  if (ticket['prioridad'] ==
-                                                      'Alta') {
-                                                    mensajeExtra =
-                                                        '¡Coyelle, coyelle en verdad urge!';
-                                                  } else if (ticket[
-                                                          'prioridad'] ==
-                                                      'Media') {
-                                                    mensajeExtra =
-                                                        '¿Ya no hay prioridad alta?';
-                                                  } else {
-                                                    mensajeExtra =
-                                                        'tómatelo con calma';
-                                                  }
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                          'La prioridad es ${ticket['prioridad']}, $mensajeExtra'),
-                                                      backgroundColor:
-                                                          Color(0xFF342E37),
+                                        Positioned(
+                                          right: 0,
+                                          top: -2,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    String mensajeExtra = "";
+                                                    if (ticket['prioridad'] ==
+                                                        'Alta') {
+                                                      mensajeExtra =
+                                                          '¡Coyelle, coyelle en verdad urge!';
+                                                    } else if (ticket[
+                                                            'prioridad'] ==
+                                                        'Media') {
+                                                      mensajeExtra =
+                                                          '¿Ya no hay prioridad alta?';
+                                                    } else {
+                                                      mensajeExtra =
+                                                          'tómatelo con calma';
+                                                    }
+                                                    ScaffoldMessenger.of(context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'La prioridad es ${ticket['prioridad']}, $mensajeExtra'),
+                                                        backgroundColor:
+                                                            Color(0xFF342E37),
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Chip(
+                                                    padding: EdgeInsets.symmetric(
+                                                        horizontal: 1.2,
+                                                        vertical: 0),
+                                                    label: SizedBox(
+                                                        width: 25,
+                                                        child: Text(
+                                                          ticket['prioridad'],
+                                                          style: TextStyle(
+                                                            color: const Color(
+                                                                0xFF000000),
+                                                            fontSize: 9,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        )),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              14),
                                                     ),
-                                                  );
-                                                },
-                                                child: Chip(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 1.2,
-                                                      vertical: 0),
-                                                  label: SizedBox(
-                                                      width: 25,
-                                                      child: Text(
-                                                        ticket['prioridad'],
-                                                        style: TextStyle(
-                                                          color: const Color(
-                                                              0xFF000000),
-                                                          fontSize: 9,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      )),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            14),
+                                                    backgroundColor:
+                                                        const Color(0xFFCFE8FF),
                                                   ),
-                                                  backgroundColor:
-                                                      const Color(0xFFCFE8FF),
                                                 ),
-                                              ),
-                                              Text(
-                                                ticket['fecha_ticket']
-                                                    .toString()
-                                                    .substring(0, 10),
-                                                style: TextStyle(
-                                                    color: Colors.black87,
-                                                    fontSize: 10),
-                                              ),
-                                            ]),
-                                      ),
-                                    ],
-                                  ))),
-                              DataCell(
-                                // SizedBox(height: 6),
-                                Text(
-                                  ticket['nombre_operador'],
-                                  style: TextStyle(
-                                    color: Colors.black87,
+                                                Text(
+                                                  ticket['fecha_ticket']
+                                                      .toString()
+                                                      .substring(0, 10),
+                                                  style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontSize: 10),
+                                                ),
+                                              ]),
+                                        ),
+                                      ],
+                                    ))),
+                                DataCell(
+                                  // SizedBox(height: 6),
+                                  Text(
+                                    ticket['nombre_operador'],
+                                    style: TextStyle(
+                                      color: Colors.black87,
+                                    ),
                                   ),
+                                  // SizedBox(height: 4),
                                 ),
-                                // SizedBox(height: 4),
-                              ),
-                            ],
-                            onSelectChanged: (value) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetallesTicket(id_Ticket: ticket['id']),
-                                ),
-                              );
-                            },
-                            selected: false,
-                            // showCheckboxColumn: false,
-                          );
-                        }).toList(),
+                              ],
+                              onSelectChanged: (value) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetallesTicket(id_Ticket: ticket['id']),
+                                  ),
+                                );
+                              },
+                              selected: false,
+                              // showCheckboxColumn: false,
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                   ),

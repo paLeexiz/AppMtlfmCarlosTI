@@ -1,6 +1,7 @@
 // import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/lista_tickets.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/login.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class ClientePrincipal extends StatelessWidget {
                           'Paquetes',
                           Icons.inventory_2_outlined,
                           Color(0xFFEF4444),
-                          () => Navigator.push(context, MaterialPageRoute(builder: (contex) => PackagesView())),
+                          () => Navigator.push(context, MaterialPageRoute(builder: (contex) => PackagesView(id: id))),// PackagesView(id: id,))),
                           height: 100
                         ),
                       ),
@@ -113,7 +114,7 @@ class ClientePrincipal extends StatelessWidget {
             colors: [
               const Color.fromARGB(255, 217, 217, 217),
               const Color.fromARGB(255, 234, 234, 234),
-              const Color.fromARGB(255, 245, 245, 245),
+              const Color.fromARGB(255, 249, 249, 249),
               Colors.white
             ],
             end: Alignment.bottomRight,

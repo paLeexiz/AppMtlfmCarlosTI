@@ -125,8 +125,8 @@ class _ListaTicketsState extends State<ListaTickets> {
                         ),
                         SizedBox(width: 22),
                         TextButton(
-                          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => ContratarPaquetes(id: widget.id)));},
-                          child: Text('levaanta ticket')
+                          onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => LevantarTicket(id: widget.id)));},
+                          child: Text('levantar ticket'),
                         )
                       ],
                     ),
@@ -216,7 +216,7 @@ class _ListaTicketsState extends State<ListaTickets> {
 
   Future<List<dynamic>> obtieneTickets() async {
     final resultado = await ApiService.solicitud(
-      tabla: 'ticketsCliente/',
+      tabla: 'ticketsCliente',
       metodo: 'get',
       id: widget.id.toString()
     );
@@ -376,10 +376,10 @@ class GlassTextField extends StatelessWidget {
                               DataCell(Row(children: [
                                 Icon(
                                   Icons.circle,
-                                  color: ticket['estado_ticket'] == 'Resuelto'
-                                      ? Colors.green
-                                      : ticket['estado_ticket'] == 'Pendiente'
+                                  color: ticket['estado_ticket'] == 'En proceso'
                                           ? Colors.red
+                                      : ticket['estado_ticket'] == 'Resuelto'
+                                      ? Colors.green
                                           : Colors.grey,
                                   size: 14,
                                 ),
@@ -407,12 +407,7 @@ class GlassTextField extends StatelessWidget {
                               ])),
                               DataCell(SizedBox(
                                   width: 257,
-                                  child: Stack(
-                                    children: [
-                                      Positioned(
-                                        left: 0,
-                                        top: 6,
-                                        child: SizedBox(
+                                  child: SizedBox(
                                           width: 196,
                                           child: Text(
                                             ticket['descripcion_ticket'],
@@ -422,77 +417,7 @@ class GlassTextField extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Positioned(
-                                        right: 0,
-                                        top: -2,
-                                        child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  String mensajeExtra = "";
-                                                  if (ticket['prioridad'] ==
-                                                      'Alta') {
-                                                    mensajeExtra =
-                                                        '¡Coyelle, coyelle en verdad urge!';
-                                                  } else if (ticket[
-                                                          'prioridad'] ==
-                                                      'Media') {
-                                                    mensajeExtra =
-                                                        '¿Ya no hay prioridad alta?';
-                                                  } else {
-                                                    mensajeExtra =
-                                                        'tómatelo con calma';
-                                                  }
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                          'La prioridad es ${ticket['prioridad']}, $mensajeExtra'),
-                                                      backgroundColor:
-                                                          Color(0xFF342E37),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Chip(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 1.2,
-                                                      vertical: 0),
-                                                  label: SizedBox(
-                                                      width: 25,
-                                                      child: Text(
-                                                        ticket['prioridad'],
-                                                        style: TextStyle(
-                                                          color: const Color(
-                                                              0xFF000000),
-                                                          fontSize: 9,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      )),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            14),
-                                                  ),
-                                                  backgroundColor:
-                                                      const Color(0xFFCFE8FF),
-                                                ),
-                                              ),
-                                              Text(
-                                                ticket['fecha_ticket']
-                                                    .toString()
-                                                    .substring(0, 10),
-                                                style: TextStyle(
-                                                    color: Colors.black87,
-                                                    fontSize: 10),
-                                              ),
-                                            ]),
-                                      ),
-                                    ],
-                                  ))),
+                                     )),
                               DataCell(
                                 // SizedBox(height: 6),
                                 Text(

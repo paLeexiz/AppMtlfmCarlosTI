@@ -27,21 +27,14 @@ class DetallesTicket extends StatelessWidget {
             return Center(child: Text('No hay tickets disponibles'));
           } else {
             final ticket = snapshot.data!;
-            final tickets = Map.from(ticket)
-              ..removeWhere((key, value) {
+            final tickets = Map.from(ticket)..removeWhere((key, value) {
                 // Add your condition here to remove the elements you don't want to keep
                 // For example, to remove entries with a specific key:
                 // return key == 'undesired_key';
-                return key != 'nombre' &&
-                    key != 'username' &&
-                    key != 'email' &&
-                    key != 'ultimo_acceso' &&
-                    key != 'estado' &&
-                    key != 'departamento' &&
-                    key != 'dias_laborales' &&
-                    key != 'fecha_registro' &&
-                    key != 'turno'; // Modify this condition as needed
-              });
+              return key == 'id' ||
+                key == 'id_cliente' ||
+                key == 'id_operador';
+            });
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(
