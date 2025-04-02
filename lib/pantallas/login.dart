@@ -246,7 +246,7 @@ class _LoginState extends State<Login> {
               : resultado['rol'] == 'operador'
                   ? MaterialPageRoute(
                       builder: (context) =>
-                          operador.ListaTickets(id: resultado['id']))
+                          operador.ListaTickets(id: resultado['id_operador']))
                   : MaterialPageRoute(
                       builder: (context) =>
                           ClientePrincipal(id: resultado['id_cliente'])),

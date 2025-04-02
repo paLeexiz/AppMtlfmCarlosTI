@@ -85,24 +85,6 @@ class _ListaTicketsState extends State<ListaTickets> {
             ),
           ),
 
-          // Forma curva inferior morada
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: Container(
-          //     height: 100,
-          //     decoration: BoxDecoration(
-          //       color: Color(0xFFCFE8FF), // Morado más intenso
-          //       borderRadius: BorderRadius.only(
-          //         topLeft: Radius.circular(100),
-          //         topRight: Radius.circular(100),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-          // Contenido principal
           SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +211,7 @@ class _ListaTicketsState extends State<ListaTickets> {
                               Icon(Icons.inbox, color: Colors.grey, size: 48),
                               SizedBox(height: 16),
                               Text(
-                                'No hay tickets disponibles',
+                                'No hay tickets disponibles ${widget.id}',
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ],
@@ -249,314 +231,7 @@ class _ListaTicketsState extends State<ListaTickets> {
                                       'Estado/Paquete/Operador/Categoria/Prioridad',
                                   tickets: tickets,
                                   snapshot: snapshot)
-                              // TextField(
-                              //     controller: b,
-                              //     cursorColor: Color(0xdd1A5C9E),
-                              //     cursorRadius: Radius.circular(3),
-                              //     cursorHeight: 19,
-                              //     cursorWidth: 2.4,
-                              //     cursorOpacityAnimates: true,
-                              //     decoration: InputDecoration(
-                              //       contentPadding: EdgeInsets.symmetric(
-                              //           //con el conentPadding puedo ajustar el tamaño
-                              //           //de la tabla independientemente del TextField
-                              //           horizontal: -57,
-                              //           vertical: 9),
-                              //       hintText: 'Estado/Paquete/Operador',
-                              //       hintStyle: TextStyle(
-                              //         color: Color(0xFF342E37),
-                              //         fontSize: 13,
-                              //       ),
-                              //       prefixIcon: Icon(Icons.search),
-                              //       border: OutlineInputBorder(
-                              //         borderRadius: BorderRadius.circular(30),
-                              //         borderSide: BorderSide.none,
-                              //       ),
-                              //       isDense: true,
-                              //       filled: true,
-                              //       fillColor: const Color(0xf7FFE0D3),
-                              //     ),
-                              //     buildCounter: (BuildContext context,
-                              //         {required int currentLength,
-                              //         required bool isFocused,
-                              //         required int? maxLength}) {
-                              //       // setState(() {
-                              //       tickets = snapshot.data!.where((ticket) {
-                              //         return ticket['prioridad']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['estado_ticket']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['nombre_categoria']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['nombre_paquete']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase()) ||
-                              //             ticket['nombre_operador']
-                              //                 .toString()
-                              //                 .toLowerCase()
-                              //                 .contains(b.text.toLowerCase());
-                              //       }).toList();
-                              //       // });
-                              //       return Center(
-                              //           child: Container(
-                              //         margin: EdgeInsets.only(top: 9),
-                              //         decoration: BoxDecoration(
-                              //           color: const Color(0xFFffffFF),
-                              //           borderRadius: BorderRadius.circular(20),
-                              //           boxShadow: [
-                              //             BoxShadow(
-                              //               color: Colors.grey.withOpacity(0.2),
-                              //               spreadRadius: 1,
-                              //               blurRadius: 9,
-                              //               offset: Offset(0, 0),
-                              //             ),
-                              //           ],
-                              //         ),
-                              //         child: ClipRRect(
-                              //           borderRadius: BorderRadius.circular(20),
-                              //           child: SingleChildScrollView(
-                              //             scrollDirection: Axis.horizontal,
-                              //             child: SingleChildScrollView(
-                              //               child: DataTable(
-                              //                 horizontalMargin: 13,
-                              //                 columnSpacing: 18,
-                              //                 dataRowHeight: 64,
-                              //                 showCheckboxColumn: false,
-                              //                 headingRowHeight: 40,
-                              //                 headingRowColor:
-                              //                     WidgetStateProperty.all(
-                              //                   Color(0xFFF9F9F9),
-                              //                 ),
-                              //                 dataRowColor: WidgetStateProperty.all(
-                              //                   Color(0xFFF9F9F9),
-                              //                 ),
-                              //                 columns: [
-                              //                   DataColumn(
-                              //                     label: Text(
-                              //                       'Categoria',
-                              //                       style: TextStyle(
-                              //                         fontWeight: FontWeight.bold,
-                              //                         color: Color(0xFF342E37),
-                              //                       ),
-                              //                     ),
-                              //                     headingRowAlignment:
-                              //                         MainAxisAlignment.center,
-                              //                   ),
-                              //                   DataColumn(
-                              //                     label: Text(
-                              //                       'Descripción',
-                              //                       style: TextStyle(
-                              //                         fontWeight: FontWeight.bold,
-                              //                         color: Color(0xFF342E37),
-                              //                       ),
-                              //                     ),
-                              //                     headingRowAlignment:
-                              //                         MainAxisAlignment.center,
-                              //                   ),
-                              //                   DataColumn(
-                              //                     label: Text(
-                              //                       'Operador',
-                              //                       style: TextStyle(
-                              //                         fontWeight: FontWeight.bold,
-                              //                         color: Color(0xFF342E37),
-                              //                       ),
-                              //                     ),
-                              //                     headingRowAlignment:
-                              //                         MainAxisAlignment.center,
-                              //                   ),
-                              //                 ],
-                              //                 rows: tickets.map((ticket) {
-                              //                   return DataRow(
-                              //                     cells: [
-                              //                       DataCell(Row(children: [
-                              //                         Icon(
-                              //                           Icons.circle,
-                              //                           color: ticket[
-                              //                                       'estado_ticket'] ==
-                              //                                   'Resuelto'
-                              //                               ? Colors.green
-                              //                               : ticket['estado_ticket'] ==
-                              //                                       'Pendiente'
-                              //                                   ? Colors.red
-                              //                                   : Colors.grey,
-                              //                           size: 15,
-                              //                         ),
-                              //                         SizedBox(width: 18),
-                              //                         Column(
-                              //                             crossAxisAlignment:
-                              //                                 CrossAxisAlignment
-                              //                                     .start,
-                              //                             children: [
-                              //                               SizedBox(height: 5),
-                              //                               Text(
-                              //                                 ticket[
-                              //                                     'nombre_categoria'],
-                              //                                 style: TextStyle(
-                              //                                   color:
-                              //                                       Colors.black87,
-                              //                                   fontSize: 18 - 3,
-                              //                                 ),
-                              //                               ),
-                              //                               SizedBox(height: 4),
-                              //                               Text(
-                              //                                 'Paquete ' +
-                              //                                     ticket[
-                              //                                         'nombre_paquete'],
-                              //                                 style: TextStyle(
-                              //                                     color: Colors
-                              //                                         .black87,
-                              //                                     fontSize: 12),
-                              //                               ),
-                              //                             ])
-                              //                       ])),
-                              //                       DataCell(Container(
-                              //                           width: 257,
-                              //                           child: Stack(
-                              //                             children: [
-                              //                               Positioned(
-                              //                                 left: 0,
-                              //                                 top: 6,
-                              //                                 child: Container(
-                              //                                   width: 196,
-                              //                                   child: Text(
-                              //                                     ticket[
-                              //                                         'descripcion_ticket'],
-                              //                                     style: TextStyle(
-                              //                                       color: Colors
-                              //                                           .black87,
-                              //                                       fontSize: 13,
-                              //                                     ),
-                              //                                   ),
-                              //                                 ),
-                              //                               ),
-                              //                               Positioned(
-                              //                                 right: 0,
-                              //                                 top: -2,
-                              //                                 child: Column(
-                              //                                     crossAxisAlignment:
-                              //                                         CrossAxisAlignment
-                              //                                             .end,
-                              //                                     children: [
-                              //                                       GestureDetector(
-                              //                                         onTap: () {
-                              //                                           String
-                              //                                               mensajeExtra =
-                              //                                               "";
-                              //                                           if (ticket[
-                              //                                                   'prioridad'] ==
-                              //                                               'Alta') {
-                              //                                             mensajeExtra =
-                              //                                                 '¡Coyelle, coyelle en verdad urge!';
-                              //                                           } else if (ticket[
-                              //                                                   'prioridad'] ==
-                              //                                               'Media') {
-                              //                                             mensajeExtra =
-                              //                                                 '¿Ya no hay prioridad alta?';
-                              //                                           } else {
-                              //                                             mensajeExtra =
-                              //                                                 'tómatelo con calma';
-                              //                                           }
-                              //                                           ScaffoldMessenger.of(
-                              //                                                   context)
-                              //                                               .showSnackBar(
-                              //                                             SnackBar(
-                              //                                               content:
-                              //                                                   Text('La prioridad es ${ticket['prioridad']}, $mensajeExtra'),
-                              //                                               backgroundColor:
-                              //                                                   Color(0xFF342E37),
-                              //                                             ),
-                              //                                           );
-                              //                                         },
-                              //                                         child: Chip(
-                              //                                           padding: EdgeInsets.symmetric(
-                              //                                               horizontal:
-                              //                                                   1.2,
-                              //                                               vertical:
-                              //                                                   0),
-                              //                                           label: Container(
-                              //                                               width: 25,
-                              //                                               child: Text(
-                              //                                                 ticket[
-                              //                                                     'prioridad'],
-                              //                                                 style:
-                              //                                                     TextStyle(
-                              //                                                   color:
-                              //                                                       const Color(0xFF000000),
-                              //                                                   fontSize:
-                              //                                                       9,
-                              //                                                 ),
-                              //                                                 textAlign:
-                              //                                                     TextAlign.center,
-                              //                                               )),
-                              //                                           shape:
-                              //                                               RoundedRectangleBorder(
-                              //                                             borderRadius:
-                              //                                                 BorderRadius.circular(
-                              //                                                     14),
-                              //                                           ),
-                              //                                           backgroundColor:
-                              //                                               const Color(
-                              //                                                   0xFFCFE8FF),
-                              //                                         ),
-                              //                                       ),
-                              //                                       Text(
-                              //                                         ticket['fecha_ticket']
-                              //                                             .toString()
-                              //                                             .substring(
-                              //                                                 0,
-                              //                                                 10),
-                              //                                         style: TextStyle(
-                              //                                             color: Colors
-                              //                                                 .black87,
-                              //                                             fontSize:
-                              //                                                 10),
-                              //                                       ),
-                              //                                     ]),
-                              //                               ),
-                              //                             ],
-                              //                           ))),
-                              //                       DataCell(
-                              //                         // SizedBox(height: 6),
-                              //                         Text(
-                              //                           ticket['nombre_operador'],
-                              //                           style: TextStyle(
-                              //                             color: Colors.black87,
-                              //                           ),
-                              //                         ),
-                              //                         // SizedBox(height: 4),
-                              //                       ),
-                              //                     ],
-                              //                     onSelectChanged: (value) {
-                              //                       Navigator.push(
-                              //                         context,
-                              //                         MaterialPageRoute(
-                              //                           builder: (context) =>
-                              //                               DetallesTicket(
-                              //                                   id_Ticket:
-                              //                                       ticket['id']),
-                              //                         ),
-                              //                       );
-                              //                     },
-                              //                     selected: false,
-                              //                     // showCheckboxColumn: false,
-                              //                   );
-                              //                 }).toList(),
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       ));
-                              //     },
-                              //   ),
-                              // ),
-                              )
+                          )
                         ]);
                       }
                     },
@@ -567,26 +242,15 @@ class _ListaTicketsState extends State<ListaTickets> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Color(0xFF342E37),
-      //   child: Icon(Icons.add, color: Colors.white),
-      //   onPressed: () {
-      //     // Acción para agregar nuevo ticket
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(
-      //         content: Text('Crear nuevo ticket'),
-      //         backgroundColor: Color(0xFF342E37),
-      //       ),
-      //     );
-      //   },
-      // ),
     );
   }
 
   Future<dynamic> marcarEntrada() async {
     final resultado = await ApiService.solicitud(
-        tabla: 'registroAsistencia', metodo: 'post', cuerpo: {"id": widget.id});
-    print('Botón presionado');
+        tabla: 'registroAsistencia',
+        metodo: 'post',
+        cuerpo: {"id": widget.id}
+    );
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Entrada marcada correctamente'),
@@ -619,8 +283,9 @@ class _ListaTicketsState extends State<ListaTickets> {
 
   Future<List<dynamic>> obtieneTickets() async {
     final resultado = await ApiService.solicitud(
-      tabla: 'ticketsOperador/${widget.id}',
+      tabla: 'ticketsOperador',
       metodo: 'get',
+      id: widget.id.toString(),
     );
     return resultado;
   }
@@ -643,11 +308,13 @@ class GlassTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final TextEditingController _cr = TextEditingController();
+
     return ClipRRect(
       borderRadius:
           BorderRadius.circular(20), // Bordes redondeados para el efecto
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 0, sigmaY: 16), // Desenfoque
+        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 15), // Desenfoque
         child: Container(
           decoration: BoxDecoration(
             // color: const Color(0x33FD7238), // Fondo semitransparente
@@ -776,12 +443,79 @@ class GlassTextField extends StatelessWidget {
                           return DataRow(
                             cells: [
                               DataCell(Row(children: [
+                                // // qui va uun operador ternario
+                                // ticket['estado_ticket'] == 'En proceso' && true //aca va que no tenga resolucion
+                                // ? TextButton(
+                                //   style: ButtonStyle(
+                                //     overlayColor: MaterialStateProperty.all<Color>(
+                                //         Colors.red.withOpacity(0.1)),
+                                //   ), 
+                                //   onPressed: () {
+                                //     showAdaptiveDialog(context: context, builder: (context) {
+                                //       return AlertDialog(
+                                //         title: Text('Cerrar ticket'),
+                                //         content: Container(
+                                //           height: 166,
+                                //           child: Column(
+                                //             children: [
+                                //               Text(
+                                //                   'Tiene que redactar el comentario resolución:'
+                                //               ),
+                                //               SizedBox(height: 18),
+                                //               TextField(
+                                //                 controller: _cr,
+                                //                 maxLines: 4,
+                                //                 decoration: InputDecoration(
+                                //                   hintText: 'Solución del ticket',
+                                //                   border: OutlineInputBorder(
+                                //                     borderRadius: BorderRadius.circular(10),
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         ),
+                                //         actions: [
+                                //           TextButton(
+                                //             onPressed: () {
+                                //               Navigator.of(context).pop();
+                                //             },
+                                //             child: Text('Cancelar'),
+                                //           ),
+                                //           TextButton(
+                                //             onPressed: () async {
+                                //               await ApiService.solicitud(
+                                //                   tabla: 'actualizarEstadoTicket',
+                                //                   metodo: 'put',
+                                //                   id: ticket['id'].toString(),
+                                //                   cuerpo: {
+                                //                     'estado_ticket': 'Resuelto',
+                                //                     'comentario_resolucion': _cr.text,
+                                //                   });
+                                //               Navigator.push(context, 
+                                //                   MaterialPageRoute(
+                                //                       builder: (context) =>
+                                //                           ListaTickets()));
+                                //             },
+                                //             child: Text('Guardar'),
+                                //           ),
+                                //         ],
+                                //       );
+                                //     });
+                                //   },
+                                //   child: Text('Cerrar\nticket',
+                                //       style: TextStyle(
+                                //         color: Colors.red,
+                                //         fontSize: 8,
+                                //       )),
+                                // )
+                                // : 
                                 Icon(
                                   Icons.circle,
-                                  color: ticket['estado_ticket'] == 'Resuelto'
-                                      ? Colors.green
-                                      : ticket['estado_ticket'] == 'Pendiente'
-                                          ? Colors.red
+                                  color: ticket['estado_ticket'] == 'En proceso'
+                                      ? Colors.red
+                                      : ticket['estado_ticket'] == 'Resuelto'
+                                          ? Colors.green
                                           : Colors.grey,
                                   size: 14,
                                 ),

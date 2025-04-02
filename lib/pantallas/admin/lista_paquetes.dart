@@ -30,16 +30,32 @@ class PackagesView extends StatelessWidget {
             return Center(
                 child: Text('Error al cargar los paquetes: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No hay paquetes disponibles'));
+            return Stack(children: [
+              Positioned(
+                top: 100,
+                right: 0,
+                left: 0,
+                child: Text('No hay paquetes disponibles')
+              ),
+              id != null ?
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  color: const Color.fromARGB(135, 186, 192, 196),
+                  child: ContratarPaquetes(id: id!)),
+              ) : Container(),
+            ]);
           } else {
             final packages = snapshot.data!;
             return Stack(children: [
               ListView.builder(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(16),    
                 itemCount: packages.length,
                 itemBuilder: (context, index) {
                   final package = packages[index];
-                  return PackageCard(package: package);
+                  return PackageCard(package: package, id: id);
                 },
               ),
               id != null ?
@@ -88,10 +104,11 @@ class PackagesView extends StatelessWidget {
 
 class PackageCard extends StatelessWidget {
   final Map<String, dynamic> package;
-
+final int? id;
   const PackageCard({
     Key? key,
     required this.package,
+    this.id = 0,
   }) : super(key: key);
 
   IconData getServiceIcon(String service) {
@@ -239,8 +256,8 @@ class PackageCard extends StatelessWidget {
                       ],
                     ),
                   );
-                }).toList(),
-              ),
+                }).toList(),),
+                
             ],
           ),
         ),
