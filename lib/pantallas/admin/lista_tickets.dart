@@ -204,15 +204,6 @@ class _ListaTicketsState extends State<ListaTickets> {
     );
   }
 
-  Future<void> marcarEntrada() async {
-    print('Botón presionado');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Entrada marcada correctamente'),
-        backgroundColor: Color(0xFF342E37),
-      ),
-    );
-  }
 
   Future<List<dynamic>> obtieneTickets() async {
     final resultado = await ApiService.solicitud(
@@ -326,9 +317,9 @@ class GlassTextField extends StatelessWidget {
                   child: Container(
                     height: 579,
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
+                      scrollDirection: Axis.horizontal,
                       child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
+                        scrollDirection: Axis.vertical,
                         child: DataTable(
                           horizontalMargin: 13,
                           columnSpacing: 18,
@@ -379,11 +370,11 @@ class GlassTextField extends StatelessWidget {
                                 DataCell(Row(children: [
                                   Icon(
                                     Icons.circle,
-                                    color: ticket['estado_ticket'] == 'Resuelto'
-                                        ? Colors.green
-                                        : ticket['estado_ticket'] == 'Pendiente'
-                                            ? Colors.red
-                                            : Colors.grey,
+                                    color: ticket['estado_ticket'] == 'En proceso'
+                                      ? Colors.red
+                                      : ticket['estado_ticket'] == 'Resuelto'
+                                          ? Colors.green
+                                          : Colors.grey,
                                     size: 14,
                                   ),
                                   SizedBox(width: 18),

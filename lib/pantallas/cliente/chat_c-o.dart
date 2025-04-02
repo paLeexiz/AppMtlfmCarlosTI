@@ -29,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
   var cerradom;
   int estrellas = 0;
   bool banCal = true;
-  late String hin = '';
+  String? hin = 'Groser@';
 
   @override
   void initState() {
@@ -40,12 +40,12 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
     verificaCalificacion().then((valor) {
-    if (mounted) {
-      setState(() {
-        banCal = valor; // Aseguramos que se actualiza correctamente
-      });
-    }
-  });
+      if (mounted) {
+        setState(() {
+          banCal = valor; // Aseguramos que se actualiza correctamente
+        });
+      }
+    });
     obtenerIDSTicket(widget.idTicket).then((valor) {
       setState(() {
         idOp = valor['id_operador'];
@@ -57,12 +57,14 @@ class _ChatScreenState extends State<ChatScreen> {
     actualizarLeidoMensaje();
   }
 
-  Future<void> obtenerIDUsuario() async { // solo uso id_usuario
+  Future<void> obtenerIDUsuario() async {
+    // solo uso id_usuario
     int id = await obtenerIDUsuarioPorCliente();
     // int id_rolsito = await obtenerIDRolPorUsuario();
     // String rol = await obtenerRolUsuarioPorRemitente();
     setState(() {
-      id_usuario =id; // Aseguramos que id_usuario tenga un valor antes de construir la UI
+      id_usuario =
+          id; // Aseguramos que id_usuario tenga un valor antes de construir la UI
       // rol_usuario = rol; // Aseguramos que id_usuario tenga un valor antes de construir la UI
       // id_rol = id_rolsito; // Aseguramos que id_usuario tenga un valor antes de construir la UI
     });
@@ -97,12 +99,32 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemCount: _messages.length,
                   itemBuilder: (context, index) {
                     print(widget.idTicket);
-                    print(idOp);
                     var align;
                     var radio;
                     var colorsito;
 
-                    if (_messages[_messages.length - 1 - index]['id_remitente'] == id_usuario ) {
+                    if (widget.idRemitente == 0) {
+                      if (_messages[_messages.length - 1 - index]['tipo_remitente'] == 'Cliente') {
+                        colorsito = Color(0xFFB2DFDB);
+                      align = Alignment.centerRight;
+                      radio = BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10));
+                      }
+                      else{
+                        colorsito = Color(0xFFFFCE26);
+                        align = Alignment.centerLeft;
+                        radio = BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10)
+                        );
+                      }
+                    }
+                    else if (_messages[_messages.length - 1 - index]
+                            ['id_remitente'] ==
+                        id_usuario) {
                       colorsito = Color(0xFFB2DFDB);
                       align = Alignment.centerRight;
                       radio = BorderRadius.only(
@@ -135,7 +157,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                 ),
               ),
-              if (!banCal && cerradom != 'Resuelto')
+              if (!banCal && cerradom != 'Resuelto' && widget.idRemitente != 0)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -167,98 +189,122 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
             ],
           ),
-          Positioned(
-              top: 27,
-              left: 0,
-              child: GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('¿Reportar operador?'),
-                        content: Text('¿Estás seguro de que deseas reportar al operador?'),
-                        actions: [
-                          DropdownButton<String>(
-                            value: hin != '' ? hin : 'null',
-                            hint: Text(hin != '' ? hin : 'null',),
-                            items: ['Groser@', 'Responde lento', 'Solo me dejó en visto', 'No sabe sobre el problema', 'Otros'].map((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                hin = newValue!;
-                              });
-                            },
-                          ),
-                          TextField(
-                            controller: _reporte,
-                            decoration: InputDecoration(
-                              hintText: 'Escribe el motivo del reporte...',
-                              border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Cerrar el diálogo
-                            },
-                            child: Text('Cancelar'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop(); // Cerrar el diálogo
-                              setState(() {
-                                ApiService.solicitud(
-                                    tabla: 'reporte_operadores',
-                                    metodo: 'post',
-                                    cuerpo: {
-                                      'nombre_reporte': widget.idTicket,
-                                      'descripcion': _reporte.text,
-                                      'id_ticket': widget.idTicket,
-                                      'id_cliente': idCl,
-                                      'id_operador': idOp,
-                                      'id_remitente': widget.idRemitente
+          if (widget.idRemitente != 0)
+            Positioned(
+                top: 27,
+                left: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('¿Reportar ${widget.idRemitente == idCl ? 'operador' : 'cliente'}?'),
+                          content:
+                              StatefulBuilder(builder: (context, setDialogState) {
+                            return Column(
+                              children: [
+                                Text(
+                                    '¿Estás seguro de que deseas reportar al ${widget.idRemitente == idCl ? 'operador' : 'cliente'}?'
+                                ),
+                                SizedBox(height: 20),
+                                DropdownButton<String>(
+                                  value: hin,
+                                  hint: Text('Selecciona un motivo'),
+                                  items: [
+                                    'Groser@',
+                                    'Responde lento',
+                                    'Solo me dejó en visto',
+                                    'No sabe sobre el problema',
+                                    'Otros'
+                                  ].map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setDialogState(() {
+                                      hin = newValue;
                                     });
-                              });
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ListaTickets(id: widget.idRemitente)));
-                            },
-                            child: Text('Aceptar'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                    color: const Color(0xeeDB504A),
+                                  },
+                                ),
+                                SizedBox(height: 100),
+                                TextField(
+                                  minLines: 6,
+                                  maxLines: 6,
+                                  controller: _reporte,
+                                  decoration: InputDecoration(
+                                    hintText: 'Escribe el motivo del reporte...',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
+                          actions: [
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Cerrar el diálogo
+                                  },
+                                  child: Text('Cancelar'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Cerrar el diálogo
+                                    setState(() {
+                                      ApiService.solicitud(
+                                          tabla: 'reporte_operadores',
+                                          metodo: 'post',
+                                          cuerpo: {
+                                            'nombre_reporte': hin,
+                                            'descripcion': _reporte.text,
+                                            'id_ticket': widget.idTicket,
+                                            'id_cliente': idCl,
+                                            'id_operador': idOp,
+                                            'id_remitente': widget.idRemitente
+                                          });
+                                    });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ListaTickets(
+                                                id: widget.idRemitente)));
+                                  },
+                                  child: Text('Aceptar'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      color: const Color(0xeeDB504A),
+                    ),
+                    height: 20,
+                    width: 88,
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'Reportar',
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 11,
+                          fontWeight: FontWeight.w600),
+                    ),
                   ),
-                  height: 20,
-                  width: 88,
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Reportar',
-                    style: TextStyle(
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-              )),
-          if (!banCal && cerradom.toString() != 'Resuelto')
+                )),
+          if (!banCal && cerradom.toString() != 'Resuelto' && widget.idRemitente != 0)
             Positioned(
                 top: 27,
                 right: 0,
@@ -317,8 +363,10 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   return IconButton(
                                                     icon: Icon(
                                                       estrellas > index
-                                                          ? Icons.star_rate_rounded
-                                                          : Icons.star_border_rounded,
+                                                          ? Icons
+                                                              .star_rate_rounded
+                                                          : Icons
+                                                              .star_border_rounded,
                                                       color: Colors.amber,
                                                     ),
                                                     onPressed: () {
@@ -336,17 +384,18 @@ class _ChatScreenState extends State<ChatScreen> {
                                       actions: [
                                         TextButton(
                                           onPressed: () {
-                                            Navigator.of(context).pop(); // Cerrar el diálogo
+                                            Navigator.of(context)
+                                                .pop(); // Cerrar el diálogo
                                             setState(() {
                                               // Aquí puedes enviar la calificación al servidor
                                               ApiService.solicitud(
                                                 tabla: 'evaluacionServicio',
                                                 metodo: 'post',
                                                 cuerpo: {
-                                                'id_ticket': widget.idTicket,
-                                                'id_cliente': idCl,
-                                                'id_operador': idOp,
-                                                'calificacion': estrellas,
+                                                  'id_ticket': widget.idTicket,
+                                                  'id_cliente': idCl,
+                                                  'id_operador': idOp,
+                                                  'calificacion': estrellas,
                                                 },
                                               );
                                             });
@@ -354,8 +403,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                  ListaTickets(
-                                                    id: widget.idRemitente),
+                                                    ListaTickets(
+                                                        id: widget.idRemitente),
                                               ),
                                             );
                                           },
@@ -399,12 +448,16 @@ class _ChatScreenState extends State<ChatScreen> {
         tabla: 'tickets', metodo: 'get', id: id.toString());
     return resultado['estado_ticket'];
   }
+
   Future<bool> verificaCalificacion() async {
     var idO = await obtenerIDSTicket(widget.idTicket);
     final resultado = await ApiService.solicitud(
         tabla: 'evaluaciones_servicio',
         metodo: 'post',
-        cuerpo: {'id_ticket':widget.idTicket, 'id_operador':idO['id_operador']});
+        cuerpo: {
+          'id_ticket': widget.idTicket,
+          'id_operador': idO['id_operador']
+        });
     return resultado['success'];
   }
 
@@ -438,6 +491,7 @@ class _ChatScreenState extends State<ChatScreen> {
         id: widget.idRemitente.toString());
     return resultado['usuario_id'];
   }
+
   Future<int> obtenerIDRolPorUsuario() async {
     final resultado = await ApiService.solicitud(
         tabla: 'obtenerIDUsuarioPorCliente',
@@ -445,6 +499,7 @@ class _ChatScreenState extends State<ChatScreen> {
         id: widget.idRemitente.toString());
     return resultado['id_rol'];
   }
+
   Future<String> obtenerRolUsuarioPorRemitente() async {
     final resultado = await ApiService.solicitud(
         tabla: 'obtenerIDUsuarioPorCliente',
@@ -464,7 +519,8 @@ class _ChatScreenState extends State<ChatScreen> {
       for (var mensaje in resultado) {
         _messages.add({
           "mensaje": mensaje["mensaje"],
-          "id_remitente": mensaje["id_remitente"]
+          "id_remitente": mensaje["id_remitente"],
+          "tipo_remitente": mensaje["tipo_remitente"]
         });
       }
     });

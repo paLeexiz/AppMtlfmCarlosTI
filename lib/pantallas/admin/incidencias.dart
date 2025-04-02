@@ -77,7 +77,7 @@ class _IncidenciasState extends State<Incidencias> {
       },
       body: jsonEncode(<String, String>{
         'fecha_inicio': DateFormat('yyyy-MM-dd').format(startDate!),
-        'fecha_final': DateFormat('yyyy-MM-dd').format(endDate!),
+        'fecha_final': DateFormat('yyyy-MM-dd').format(endDate!)
       }),
     );
 

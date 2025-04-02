@@ -1,4 +1,5 @@
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/incidencias.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_clientes.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_empleados.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
@@ -14,29 +15,42 @@ class AdminPrincipal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 220, 225, 232),
-      appBar: AppBar(
-        title: Text(
-          'Panel de Inicio',
-          style: TextStyle(
-            color: Colors.grey[800],
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Panel de Inicio',
+      //     style: TextStyle(
+      //       color: Colors.grey[800],
+      //       fontWeight: FontWeight.w600,
+      //     ),
+      //   ),
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Bienvenido',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.grey[800],
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  'Bienvenido',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                  ),
+                ),
+                Text(
+                  ' al Panel de Inicio',
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 31),
             Expanded(
@@ -72,9 +86,9 @@ class AdminPrincipal extends StatelessWidget {
                           context,
                           'Tickets',
                           Icons.confirmation_number_outlined,
-                          Color(0xFFF59E0B),
+                          Color.fromARGB(255, 253, 205, 62),
                           () => Navigator.push(context, MaterialPageRoute(builder: (contex) => ListaTickets())),
-                          height: 90
+                          height: 89
                         ),
                       ),
                     ],
@@ -86,9 +100,9 @@ class AdminPrincipal extends StatelessWidget {
                         context,
                         'Paquetes',
                         Icons.inventory_2_outlined,
-                        Color(0xFFEF4444),
+                        Color.fromARGB(255, 246, 32, 32),
                         () => Navigator.push(context, MaterialPageRoute(builder: (contex) => PackagesView())),
-                        height: 100
+                        height: 109
                       ),
                       ),
                       Expanded(
@@ -98,6 +112,30 @@ class AdminPrincipal extends StatelessWidget {
                             Icons.production_quantity_limits_rounded,
                             Color.fromARGB(255, 94, 220, 218),
                           () => Navigator.push(context, MaterialPageRoute(builder: (contex) => ListaServicios())),
+                          height: 109
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildDeepPortalItem(
+                          context,
+                          'Clientes',
+                            Icons.people_alt_sharp,
+                          Color.fromARGB(255, 157, 43, 206),
+                          () => Navigator.push(context, MaterialPageRoute(builder: (contex) => ListaClientes())),
+                          height: 109
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildDeepPortalItem(
+                          context,
+                          'Registros Sistema',
+                          Icons.system_update_outlined,
+                          Color.fromARGB(255, 255, 161, 29),
+                          () => Navigator.push(context, MaterialPageRoute(builder: (contex) => RegistrosSistema())),
                           height: 100
                         ),
                       ),
@@ -111,20 +149,7 @@ class AdminPrincipal extends StatelessWidget {
                           height: 100
                         ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildDeepPortalItem(
-                          context,
-                          'Registros Sistema',
-                          Icons.system_update_alt_outlined,
-                          Color.fromARGB(255, 123, 31, 162),
-                          () => Navigator.push(context, MaterialPageRoute(builder: (contex) => RegistrosSistema())),
-                          height: 100
-                        ),
-                      ),
+                      
                     ],
                   ),
                 ],

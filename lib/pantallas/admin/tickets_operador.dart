@@ -3,26 +3,26 @@ import 'dart:ui';
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_ticket.dart';
 // import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_servicios.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_paquetes.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/chat_c-o.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/contratar_paquete.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/levantar_ticket.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/login.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
-class ListaTickets extends StatefulWidget {
+class TicketsOperador extends StatefulWidget {
   final id;
-  const ListaTickets({super.key, this.id});
+  final nombre;
+  const TicketsOperador({super.key, this.id, this.nombre});
 
   @override
-  _ListaTicketsState createState() => _ListaTicketsState();
+  _TicketsOperadorState createState() => _TicketsOperadorState();
 }
 
-class _ListaTicketsState extends State<ListaTickets> {
+class _TicketsOperadorState extends State<TicketsOperador> {
   bool isRefreshing = false;
   final TextEditingController b = TextEditingController();
 
+  dynamic resultado = {};
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,8 +56,6 @@ class _ListaTicketsState extends State<ListaTickets> {
               ),
             ),
           ),
-
-          // Contenido principal
           SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +72,7 @@ class _ListaTicketsState extends State<ListaTickets> {
                         onPressed: () => Navigator.pop(context),
                       ),
                       Text(
-                        'Cliente',
+                        'Tickets del Operador ${widget.nombre}',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -110,10 +108,10 @@ class _ListaTicketsState extends State<ListaTickets> {
                     //   borderRadius: BorderRadius.circular(10),
                     // ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Icon(Icons.list_alt, color: Color(0xFF342E37)),
+                        SizedBox(width: 21),
                         Text(
                           'Lista de Tickets',
                           style: TextStyle(
@@ -122,17 +120,6 @@ class _ListaTicketsState extends State<ListaTickets> {
                             color: Color(0xFF342E37),
                           ),
                         ),
-                        SizedBox(width: 22),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        LevantarTicket(id: widget.id)));
-                          },
-                          child: Text('levantar ticket'),
-                        )
                       ],
                     ),
                   ),
@@ -192,7 +179,8 @@ class _ListaTicketsState extends State<ListaTickets> {
                                   hintText:
                                       'Estado/Paquete/Operador/Categoria/Prioridad',
                                   tickets: tickets,
-                                  snapshot: snapshot))
+                                  snapshot: snapshot)
+                        )
                         ]);
                       }
                     },
@@ -203,25 +191,50 @@ class _ListaTicketsState extends State<ListaTickets> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: Color(0xFF342E37),
-      //   child: Icon(Icons.add, color: Colors.white),
-      //   onPressed: () {
-      //     // Acción para agregar nuevo ticket
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(
-      //         content: Text('Crear nuevo ticket'),
-      //         backgroundColor: Color(0xFF342E37),
-      //       ),
-      //     );
-      //   },
-      // ),
     );
+  }
+
+  Future<dynamic> marcarEntrada() async {
+    final resultado = await ApiService.solicitud(
+        tabla: 'registroAsistencia',
+        metodo: 'post',
+        cuerpo: {"id": widget.id}
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Entrada marcada correctamente'),
+        backgroundColor: Color(0xFF342E37),
+      ),
+    );
+    return resultado;
+  }
+
+  Future<void> marcarSalida(var idPut) async {
+    // final resultado = 
+    await ApiService.solicitud(
+        tabla: 'registroSalida', metodo: 'put', id: idPut.toString());
+    print('Botón presionado $idPut');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Salida marcada correctamente'),
+        backgroundColor: Color(0xFF342E37),
+      ),
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            Login(),
+      ),
+    );
+    // retur resultado;
   }
 
   Future<List<dynamic>> obtieneTickets() async {
     final resultado = await ApiService.solicitud(
-        tabla: 'ticketsCliente', metodo: 'get', id: widget.id.toString());
+      tabla: 'ticketsOperador/${widget.id}',
+      metodo: 'get',
+    );
     return resultado;
   }
 }
@@ -247,7 +260,7 @@ class GlassTextField extends StatelessWidget {
       borderRadius:
           BorderRadius.circular(20), // Bordes redondeados para el efecto
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 6), // Desenfoque
+        filter: ImageFilter.blur(sigmaX: 4, sigmaY: 14), // Desenfoque
         child: Container(
           decoration: BoxDecoration(
             // color: const Color(0x33FD7238), // Fondo semitransparente
@@ -363,7 +376,7 @@ class GlassTextField extends StatelessWidget {
                           ),
                           DataColumn(
                             label: Text(
-                              'Operador',
+                              'Cliente',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF342E37),
@@ -408,22 +421,97 @@ class GlassTextField extends StatelessWidget {
                                     ])
                               ])),
                               DataCell(SizedBox(
-                                width: 257,
-                                child: SizedBox(
-                                  width: 196,
-                                  child: Text(
-                                    ticket['descripcion_ticket'],
-                                    style: TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                ),
-                              )),
+                                  width: 257,
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        left: 0,
+                                        top: 6,
+                                        child: SizedBox(
+                                          width: 196,
+                                          child: Text(
+                                            ticket['descripcion_ticket'],
+                                            style: TextStyle(
+                                              color: Colors.black87,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: -2,
+                                        child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              GestureDetector(
+                                                onTap: () {
+                                                  String mensajeExtra = "";
+                                                  if (ticket['prioridad'] ==
+                                                      'Alta') {
+                                                    mensajeExtra =
+                                                        '¡Coyelle, coyelle en verdad urge!';
+                                                  } else if (ticket[
+                                                          'prioridad'] ==
+                                                      'Media') {
+                                                    mensajeExtra =
+                                                        '¿Ya no hay prioridad alta?';
+                                                  } else {
+                                                    mensajeExtra =
+                                                        'tómatelo con calma';
+                                                  }
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          'La prioridad es ${ticket['prioridad']}, $mensajeExtra'),
+                                                      backgroundColor:
+                                                          Color(0xFF342E37),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Chip(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 1.2,
+                                                      vertical: 0),
+                                                  label: SizedBox(
+                                                      width: 25,
+                                                      child: Text(
+                                                        ticket['prioridad'],
+                                                        style: TextStyle(
+                                                          color: const Color(
+                                                              0xFF000000),
+                                                          fontSize: 9,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      )),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                  ),
+                                                  backgroundColor:
+                                                      const Color(0xFFCFE8FF),
+                                                ),
+                                              ),
+                                              Text(
+                                                ticket['fecha_ticket']
+                                                    .toString()
+                                                    .substring(0, 10),
+                                                style: TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 10),
+                                              ),
+                                            ]),
+                                      ),
+                                    ],
+                                  ))),
                               DataCell(
                                 // SizedBox(height: 6),
                                 Text(
-                                  ticket['nombre_operador'],
+                                  ticket['nombre_cliente'],
                                   style: TextStyle(
                                     color: Colors.black87,
                                   ),
@@ -435,13 +523,13 @@ class GlassTextField extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ChatScreen(
-                                      idRemitente: id, idTicket: ticket['id']),
+                                  builder: (context) =>
+                                      ChatScreen(idRemitente: 0, idTicket: ticket['id']),
+                                      // DetallesTicket(id_Ticket: ticket['id']),
                                 ),
                               );
                             },
                             selected: false,
-                            // showCheckboxColumn: false,
                           );
                         }).toList(),
                       ),

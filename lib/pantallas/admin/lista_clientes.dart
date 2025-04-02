@@ -1,19 +1,18 @@
 import 'dart:ui';
 
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/crear-actualizar_empleado.dart';
-import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_empleado.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_cliente.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/principal.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
-class ListaEmpleados extends StatefulWidget {
-  const ListaEmpleados({super.key});
+class ListaClientes extends StatefulWidget {
+  const ListaClientes({super.key});
 
   @override
-  _ListaEmpleadosState createState() => _ListaEmpleadosState();
+  _ListaClientesState createState() => _ListaClientesState();
 }
 
-class _ListaEmpleadosState extends State<ListaEmpleados> {
+class _ListaClientesState extends State<ListaClientes> {
   bool isRefreshing = false;
   final TextEditingController b = TextEditingController();
   @override
@@ -101,38 +100,28 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                     //   borderRadius: BorderRadius.circular(10),
                     // ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       // mainAxisSize: MainAxisSize.max,
                       children: [
                         Icon(Icons.list_alt, color: Color(0xFF342E37)),
+                        SizedBox(width: 12),
                         Text(
-                          'Lista de Empleados',
+                          'Lista de Clientes',
                           style: TextStyle(
                             fontSize: 18 - 3,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF342E37),
                           ),
                         ),
-                        SizedBox(width: 12),
-                        FloatingActionButton.small(
-                          tooltip: 'agregar empleado',
-                          onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EmployeeForm()));
-                          },
-                          child: Icon(Icons.add),
-                        ),
                       ],
                     ),
                   ),
                 ),
 
-                // Lista de Empleados
+                // Lista de Clientes
                 Expanded(
                   child: FutureBuilder<List<dynamic>>(
-                    future: obtieneEmpleados(),
+                    future: obtieneClientes(),
                     builder: (context, snapshot) {
                       if (isRefreshing ||
                           snapshot.connectionState == ConnectionState.waiting) {
@@ -164,14 +153,14 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                               Icon(Icons.inbox, color: Colors.grey, size: 48),
                               SizedBox(height: 16),
                               Text(
-                                'No hay Empleados disponibles',
+                                'No hay Clientes disponibles',
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ],
                           ),
                         );
                       } else {
-                        var Empleados = snapshot.data!;
+                        var Clientes = snapshot.data!;
 
                         return Column(children: [
                           Padding(
@@ -207,7 +196,7 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        Empleados.length
+                                                        Clientes.length
                                                             .toString(),
                                                         style: TextStyle(
                                                             fontWeight:
@@ -215,7 +204,7 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                                                                     .w900),
                                                       ),
                                                       Text(
-                                                        'Total de Empleados',
+                                                        'Total de Clientes',
                                                         style: TextStyle(
                                                             fontSize: 12,
                                                             fontWeight:
@@ -251,11 +240,11 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                                                             .center,
                                                     children: [
                                                       Text(
-                                                        Empleados.where(
+                                                        Clientes.where(
                                                                 (empleado) {
                                                           return empleado[
-                                                                  'estado'] ==
-                                                              'Activo'; //? empleado : null;
+                                                                  'Estado'] ==
+                                                              'activo'; //? empleado : null;
                                                         })
                                                             .toList()
                                                             .length
@@ -266,7 +255,7 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                                                                     .w900),
                                                       ), //.length.toString()),
                                                       Text(
-                                                        'Empleados Activos',
+                                                        'Clientes Activos',
                                                         style: TextStyle(
                                                             fontSize: 12,
                                                             fontWeight:
@@ -284,7 +273,7 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
                               child: GlassTextField(
                                   b: b,
                                   hintText: 'Email/Estado/Turno/username',
-                                  Empleados: Empleados,
+                                  Clientes: Clientes,
                                   snapshot: snapshot)
                           )
                         ]);
@@ -300,9 +289,9 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
     );
   }
 
-  Future<List<dynamic>> obtieneEmpleados() async {
+  Future<List<dynamic>> obtieneClientes() async {
     final resultado = await ApiService.solicitud(
-      tabla: 'operadores',
+      tabla: 'clientes',
       metodo: 'get',
     );
     return resultado;
@@ -313,13 +302,13 @@ class _ListaEmpleadosState extends State<ListaEmpleados> {
 class GlassTextField extends StatelessWidget {
   final TextEditingController b;
   final String hintText;
-  List<dynamic>? Empleados;
+  List<dynamic>? Clientes;
   final snapshot;
   GlassTextField(
       {super.key,
       required this.b,
       required this.hintText,
-      required this.Empleados,
+      required this.Clientes,
       required this.snapshot});
 
   @override
@@ -364,20 +353,20 @@ class GlassTextField extends StatelessWidget {
               required bool isFocused,
               required int? maxLength}) {
             // setState(() {
-            Empleados = snapshot.data!.where((empleado) {
-              return empleado['Username']
+            Clientes = snapshot.data!.where((empleado) {
+              return empleado['Estado']
                       .toString()
                       .toLowerCase()
                       .contains(b.text.toLowerCase()) ||
-                  empleado['Email']
+                  empleado['Nombre']
                       .toString()
                       .toLowerCase()
                       .contains(b.text.toLowerCase()) ||
-                  empleado['Estado']
+                  empleado['Nombre de Usuario']
                       .toString()
                       .toLowerCase()
                       .contains(b.text.toLowerCase()) ||
-                  empleado['Turno']
+                  empleado['Correo Electrónico']
                       .toString()
                       .toLowerCase()
                       .contains(b.text.toLowerCase());
@@ -450,13 +439,13 @@ class GlassTextField extends StatelessWidget {
                             headingRowAlignment: MainAxisAlignment.center,
                           ),
                         ],
-                        rows: Empleados!.map((Empleado) {
+                        rows: Clientes!.map((Empleado) {
                           return DataRow(
                             cells: [
                               DataCell(Center(
                                 child: Icon(
                                   Icons.circle,
-                                  color: Empleado['Estado'] == 'Activo'
+                                  color: Empleado['Estado'] == 'activo'
                                       ? const Color.fromARGB(208, 77, 237, 141)
                                       : const Color.fromARGB(255, 252, 98, 87),
                                   size: 15,
@@ -467,7 +456,7 @@ class GlassTextField extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      Empleado['Username'],
+                                      Empleado['Nombre de Usuario'],
                                       style: TextStyle(
                                         color: Colors.black87,
                                         fontSize: 18 - 3,
@@ -475,7 +464,7 @@ class GlassTextField extends StatelessWidget {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      Empleado['Email'],
+                                      Empleado['Correo Electrónico'],
                                       style: TextStyle(
                                           color: Colors.black87, fontSize: 12),
                                     ),
@@ -485,13 +474,13 @@ class GlassTextField extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      Empleado['Turno'] ?? '',
+                                      Empleado['Teléfono'].toString(),
                                       style: TextStyle(
                                         color: Colors.black87,
                                         fontSize: 14,
                                       ),
                                     ),
-                                    Text(Empleado['Días Laborales'] ?? '',
+                                    Text(Empleado['Fecha de Creación'] ?? '',
                                         style: TextStyle(
                                           color: Colors.black87,
                                         )),
@@ -503,13 +492,12 @@ class GlassTextField extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DetallesEmpleado(
-                                      id_Empleado: Empleado['id_operador']),
+                                  builder: (context) => DetallesCliente(
+                                      id_Cliente: Empleado['ID Cliente']),
                                 ),
                               );
                             },
                             selected: false,
-                            // showCheckboxColumn: false,
                           );
                         }).toList(),
                       ),

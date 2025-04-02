@@ -1,3 +1,5 @@
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/detalles_empleado.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/cliente/chat_c-o.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
@@ -76,17 +78,65 @@ class DetallesTicket extends StatelessWidget {
                                     DataColumn(label: Text('')),
                                   ],
                                   rows: tickets.keys
-                                      .map((key) => DataRow(cells: [
-                                            DataCell(
-                                              Text(key,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ),
-                                            DataCell(
-                                                Text(tickets[key].toString())),
-                                          ]))
-                                      .toList(),
+                                      .map((key) {
+                                        if (key == 'nombre_operador') {
+                                          print(tickets);
+                                          return DataRow(cells: [
+                                              DataCell(
+                                                Text(key,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                              DataCell(
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              DetallesEmpleado(
+                                                                  id_Empleado: ticket['id_operador'],
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    child: Text(tickets[key].toString())
+                                                  )
+                                                ),
+                                            ]);
+                                          
+                                        } else {
+                                          return DataRow(cells: [
+                                              DataCell(
+                                                Text(key,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                              DataCell(
+                                                  Text(tickets[key].toString())),
+                                            ]);
+                                        }
+                                    }
+                                  ).toList(),
+                                ),
+                                Center(
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      
+                                      ElevatedButton(
+                                        onPressed: () => Navigator.push(
+                                          context, MaterialPageRoute(builder: (context) => ChatScreen(idRemitente: 0, idTicket: id_Ticket))
+                                        ),
+                                        child: Text('Ver el chat'),
+                                      ),
+                                      Text(' *Tendrá la vista del cliente',
+                                          style: TextStyle(
+                                              color: Colors.grey[800],
+                                              fontSize: 10)),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

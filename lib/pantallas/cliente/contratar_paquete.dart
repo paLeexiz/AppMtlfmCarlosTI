@@ -38,7 +38,7 @@ class _ContratarPaquetesState extends State<ContratarPaquetes> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No hay servicios disponibles'));
+              return Center(child: Text('No hay paquetes disponibles para contratar'));
             } else {
               // print(widget.id);
               paqueteEnVista = PackageCard(
@@ -100,7 +100,7 @@ class _ContratarPaquetesState extends State<ContratarPaquetes> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           print(_servicio + ', ' + widget.id.toString());
-                          // postPaqueteCliente(int.parse(_servicio), widget.id);
+                          postPaqueteCliente(int.parse(_servicio), widget.id);
                           // Aquí puedes agregar la lógica para contratar el servicio
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(

@@ -1,5 +1,7 @@
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/crear-actualizar_empleado.dart';
 import 'package:appmltpltfrm_carlos_ti/pantallas/admin/lista_empleados.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/reporte.dart';
+import 'package:appmltpltfrm_carlos_ti/pantallas/admin/tickets_operador.dart';
 import 'package:appmltpltfrm_carlos_ti/services/api_services.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +20,9 @@ class DetallesEmpleado extends StatelessWidget {
           backgroundColor: const Color(0xFF1A5C9E),
           leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, size: 20),
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListaEmpleados())),
+                    onPressed: () => 
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => ListaEmpleados())),
+                    Navigator.pop(context),
 
         ),
         ),
@@ -39,16 +43,16 @@ class DetallesEmpleado extends StatelessWidget {
                     // Add your condition here to remove the elements you don't want to keep
                     // For example, to remove entries with a specific key:
                     // return key == 'undesired_key';
-                    return key != 'nombre' &&
-                        key != 'username' &&
-                        key != 'email' &&
-                        key != 'telefono' &&
-                        key != 'ultimo_acceso' &&
-                        key != 'estado' &&
-                        key != 'departamento' &&
-                        key != 'dias_laborales' &&
-                        key != 'fecha_registro' &&
-                        key != 'turno'; // Modify this condition as needed
+                    return key != 'Nombre' &&
+                        key != 'Username' &&
+                        key != 'Email' &&
+                        key != 'Telefono' &&
+                        key != 'Último Acceso' &&
+                        key != 'Estado' &&
+                        key != 'Departamento' &&
+                        key != 'Dias Laborales' &&
+                        key != 'Fecha Registro' &&
+                        key != 'Turno'; // Modify this condition as needed
                   });
                 // print(ticket);
                 return SingleChildScrollView(
@@ -100,24 +104,68 @@ class DetallesEmpleado extends StatelessWidget {
                                         .toList()),
                                   SizedBox(height: 16),
                                   Center(
-                                    child: ElevatedButton.icon(
-                                    onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => EmployeeForm(isEditing: true, employeeData: ticket)));
-                                    },
-                                    icon: Icon(Icons.edit),
-                                    label: Text('Editar'),
-                                    style: ElevatedButton.styleFrom(
-                                        alignment: Alignment.center,
-                                      // primary: const Color(0xFF1A5C9E),
-                                      // onPrimary: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                        
-                                        horizontal: 20, vertical: 11
-                                      ),
-                                    ),
+                                    child: Row(
+                                      children: [
+                                        ElevatedButton.icon(
+                                        onPressed: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => EmployeeForm(isEditing: true, employeeData: ticket)));
+                                        },
+                                        icon: Icon(Icons.edit),
+                                        label: Text('Editar'),
+                                        style: ElevatedButton.styleFrom(
+                                            alignment: Alignment.center,
+                                          // primary: const Color(0xFF1A5C9E),
+                                          // onPrimary: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(16),
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                            
+                                            horizontal: 20, vertical: 11
+                                          ),
+                                        ),
+                                        ),
+                                        SizedBox(width: 16),
+                                        ElevatedButton.icon(
+                                          iconAlignment: IconAlignment.end,
+                                          onPressed: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => Reporte(id: id_Empleado)));
+                                          },
+                                          label: Text('Ver reportes'),
+                                          icon: Icon(Icons.arrow_circle_right_rounded),
+                                          style: ElevatedButton.styleFrom(
+                                            alignment: Alignment.center,
+                                            // primary: const Color(0xFF1A5C9E),
+                                            // onPrimary: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(16),
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 11
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: 16),
+                                        ElevatedButton.icon(
+                                          iconAlignment: IconAlignment.end,
+                                          onPressed: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (context) => TicketsOperador(id: id_Empleado, nombre: tickets['nombre'])));
+                                          },
+                                          label: Text('Ver tickets'),
+                                          icon: Icon(Icons.arrow_forward_ios_rounded),
+                                          style: ElevatedButton.styleFrom(
+                                            alignment: Alignment.center,
+                                            // primary: const Color(0xFF1A5C9E),
+                                            // onPrimary: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(16),
+                                            ),
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 11
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                               ],
